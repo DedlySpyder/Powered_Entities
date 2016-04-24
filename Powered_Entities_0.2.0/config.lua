@@ -23,7 +23,7 @@ smallEntities = {"small-lamp",
 					"small-pump", 
 					"solar-panel"}
 
---These entities will have the connection range/power radius of a medium power pole							
+--These entities will have the connection range/power radius of a medium power pole		
 mediumEntities = {"assembling-machine-3", 
 					"radar", 
 					"chemical-plant", 
