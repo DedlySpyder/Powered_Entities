@@ -1,6 +1,6 @@
 require "defines"
 
---This will change between the old version and the new version
+--This will change between manual and automatic mode
 --true will force the player to make power pads to have entities be linked to the power grid
 --false will be the old way where the entities are linked to the power grid on their own
 manual_mode = true
@@ -12,31 +12,35 @@ manual_mode = true
 --DO NOT DELETE ANY LIST ENTIRELY
 --If you want to remove all of the entities from a category then just empty the list so that only the curly brackets remain "{}"
 
---These entities will have the connection range/power radius of a small power pole
-smallEntities = {"small-lamp", 
-					"assembling-machine-1", 
-					"assembling-machine-2", 
-					"basic-mining-drill", 
-					"basic-accumulator", 
-					"electric-furnace",
-					"lab", 
-					"small-pump", 
-					"solar-panel"}
+entities1x1 = {	"small-lamp",
+				"small-pump"}
 
---These entities will have the connection range/power radius of a medium power pole		
-mediumEntities = {"assembling-machine-3", 
-					"radar", 
-					"chemical-plant", 
-					"basic-beacon", 
-					"laser-turret", 
-					"pumpjack"}
+entities2x2 = {	"basic-accumulator",
+				"laser-turret"}
 
---These entities will have the connection range/power radius of a substation
-largeEntities = {"roboport", 
-					"oil-refinery", 
-					"rocket-silo"}
+entities3x3 = {	"assembling-machine-1", 
+				"assembling-machine-2", 
+				"assembling-machine-3",
+				"radar",
+				"basic-mining-drill",
+				"electric-furnace",
+				"lab",
+				"solar-panel",
+				"chemical-plant", 
+				"basic-beacon",
+				"pumpjack"}
 
+entities4x4 = {"roboport"}
 
+entities5x5 = {"oil-refinery"}
+
+entities9x10 = {"rocket-silo"}
+
+--This list is highly configurable
+--The other two variables here set the wire reach distance and the power radius of the entities in this list
+entitiesCustom = {}
+custom_power_pole_wire_distance = 1
+custom_power_pole_power_radius = 5
 
 --Debug
 debug_mode = false
