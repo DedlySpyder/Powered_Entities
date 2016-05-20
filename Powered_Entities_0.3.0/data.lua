@@ -1,0 +1,6 @@
+require("config")
+require("prototypes.entities.invisable_poles")
+require("prototypes.entities.manual_mode_entities")
+require("prototypes.items")
+require("prototypes.recipes")
+require("prototypes.technology.") 
