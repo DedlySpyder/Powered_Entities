@@ -3,7 +3,7 @@ data:extend ({
 {
 	type = "lamp",
     name = "power-pad",
-    icon = "__base__/graphics/icons/small-lamp.png", --change
+    icon = "__Powered_Entities__/graphics/power_pad_icon.png",
     flags = {"placeable-neutral", "player-creation"},
     minable = {hardness = 0.2, mining_time = 0.5, result = "power-pad"},
     max_health = 55,
@@ -35,25 +35,25 @@ data:extend ({
     {
       filename = "__Powered_Entities__/graphics/power_pad_on.png",
       priority = "very-low",
-      width = 5,
-      height = 5,
+      width = 7,
+      height = 7,
       frame_count = 1,
       axially_symmetrical = false,
       direction_count = 1,
-      shift = {0, -0.1},
+      shift = {0, -0.25},
     },
 
     circuit_wire_connection_point =
     {
       shadow =
       {
-        red = {0.759375, -0.096875},
-        green = {0.759375, -0.096875},
+        red = {0, -0.2},
+        green = {0, -0.2},
       },
       wire =
       {
-        red = {0.30625, -0.39375},
-        green = {0.30625, -0.39375},
+        red = {0, -0.2},
+        green = {0, -0.2},
       }
     },
 
