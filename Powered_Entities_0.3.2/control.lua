@@ -1,6 +1,6 @@
-require "defines"
 require "config"
 require "scripts"
+require "mod-compadibility"
 require 'stdlib/area/area'
 require 'stdlib/surface'
 require 'stdlib/game'
