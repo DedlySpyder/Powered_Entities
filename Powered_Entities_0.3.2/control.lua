@@ -42,6 +42,10 @@ script.on_configuration_changed(function(data)
 		end
 	end
 end)
+
+script.on_init(function(data)
+	initialize_arrays()
+end)
  
  --Check on building entities
 function entityBuilt(event)
