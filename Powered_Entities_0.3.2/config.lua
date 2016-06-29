@@ -1,5 +1,3 @@
-require "defines"
-
 --This will change between manual and automatic mode
 --true will force the player to make power pads to have entities be linked to the power grid
 --false will be the old way where the entities are linked to the power grid on their own
@@ -15,19 +13,19 @@ manual_mode = true
 entities1x1 = {	"small-lamp",
 				"small-pump"}
 
-entities2x2 = {	"basic-accumulator",
+entities2x2 = {	"accumulator",
 				"laser-turret"}
 
 entities3x3 = {	"assembling-machine-1", 
 				"assembling-machine-2", 
 				"assembling-machine-3",
 				"radar",
-				"basic-mining-drill",
+				"electric-mining-drill",
 				"electric-furnace",
 				"lab",
 				"solar-panel",
 				"chemical-plant", 
-				"basic-beacon",
+				"beacon",
 				"pumpjack"}
 
 entities4x4 = {"roboport"}
@@ -43,4 +41,4 @@ custom_power_pole_wire_distance = 1
 custom_power_pole_power_radius = 5
 
 --Debug
-debug_mode = false
+debug_mode = true

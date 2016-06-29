@@ -3,7 +3,7 @@ data:extend ({
 {
     type = "item",
     name = "power-pad",
-    icon = "__Powered_Entities__/graphics/power_pad_off.png",
+    icon = "__Powered_Entities__/graphics/power_pad_icon.png",
     flags = {"goes-to-quickbar"},
     subgroup = "energy-pipe-distribution",
     order = "a[energy]-e[power-pad]",

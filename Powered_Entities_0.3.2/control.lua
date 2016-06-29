@@ -1,6 +1,6 @@
-require "defines"
 require "config"
 require "scripts"
+require "mod-compadibility"
 require 'stdlib/area/area'
 require 'stdlib/surface'
 require 'stdlib/game'
@@ -41,6 +41,10 @@ script.on_configuration_changed(function(data)
 			end
 		end
 	end
+end)
+
+script.on_init(function(data)
+	initialize_arrays()
 end)
  
  --Check on building entities
