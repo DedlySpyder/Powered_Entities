@@ -1,6 +1,6 @@
 require "config"
 require "scripts"
-require "mod-compadibility"
+require "mod-compadibility/mod-compadibility"
 require 'stdlib/area/area'
 require 'stdlib/surface'
 require 'stdlib/game'
@@ -41,10 +41,12 @@ script.on_configuration_changed(function(data)
 			end
 		end
 	end
+	initializeGlobal()
 end)
 
+--
 script.on_init(function(data)
-	initialize_arrays()
+	initializeGlobal()
 end)
  
  --Check on building entities
@@ -102,52 +104,92 @@ script.on_event(defines.events.on_research_finished, researchCompleted)
 --Displays debug messages
 function debugLog(message)
 	if debug_mode then
-		player.print(message)
+		for _, player in pairs(game.players) do
+			player.print(message)
+		end
 	end
 end 
 
 --Remote Calls
-
---This is a command to switch between modes after a game has already had this mod run on it
--- /c remote.call("Powered_Entities", "Recalculate_Powered_Entities")
 remote.add_interface("Powered_Entities", {
+	--This is a command to switch between modes after a game has already had this mod run on it
+	--It will also recheck the config files
+	-- /c remote.call("Powered_Entities", "Recalculate_Powered_Entities")
 	Recalculate_Powered_Entities = function()
+		initializeGlobal()
+		
 		if manual_mode then
 			placeAllPolesManual()
 		else
 			placeAllPolesAutomatic(nil)
 		end
-	end
-})
+	end,
 
---Test function, gives all entities effected by mod and some power poles if needed
--- /c remote.call("PE", "testing")
-remote.add_interface("PE", {
+	--Test function, gives all entities effected by mod and some power poles if needed
+	-- /c remote.call("Powered_Entities", "testing")
 	testing = function()
 		if debug_mode then 
+			for _, player in pairs(game.players) do
+				for _, item in pairs(entities1x1) do
+					player.insert(item)
+				end
+				for _, item in pairs(entities2x2) do
+					player.insert(item)
+				end
+				for _, item in pairs(entities3x3) do
+					player.insert(item)
+				end
+				for _, item in pairs(entities4x4) do
+					player.insert(item)
+				end
+				for _, item in pairs(entities5x5) do
+					player.insert(item)
+				end
+				for _, item in pairs(entities9x10) do
+					player.insert(item)
+				end
+				for _, item in pairs(entitiesCustom) do
+					player.insert(item)
+				end
+				if manual_mode then
+					player.insert{name="power-pad", count=200}
+				end
+			end
+		end
+	end,
+	
+	--Exports arrays to file
+	-- /c remote.call("Powered_Entities", "export_arrays")
+	export_arrays = function()
+		if debug_mode then
+			game.write_file("Powered_Entities_Export.txt", "", false)
+			game.write_file("Powered_Entities_Export.txt", "1x1\r\n", true)
 			for _, item in pairs(entities1x1) do
-				game.player.insert(item)
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
+			game.write_file("Powered_Entities_Export.txt", "2x2\r\n", true)
 			for _, item in pairs(entities2x2) do
-				game.player.insert(item)
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
+			game.write_file("Powered_Entities_Export.txt", "3x3\r\n", true)
 			for _, item in pairs(entities3x3) do
-				game.player.insert(item)
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
+			game.write_file("Powered_Entities_Export.txt", "4x4\r\n", true)
 			for _, item in pairs(entities4x4) do
-				game.player.insert(item)
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
+			game.write_file("Powered_Entities_Export.txt", "5x5\r\n", true)
 			for _, item in pairs(entities5x5) do
-				game.player.insert(item)
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
+			game.write_file("Powered_Entities_Export.txt", "9x10\r\n", true)
 			for _, item in pairs(entities9x10) do
-				game.player.insert(item)
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
+			game.write_file("Powered_Entities_Export.txt", "Custom\r\n", true)
 			for _, item in pairs(entitiesCustom) do
-				game.player.insert(item)
-			end
-			if manual_mode then
-				game.player.insert{name="power-pad", count=200}
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
 		end
 	end
