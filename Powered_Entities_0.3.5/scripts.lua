@@ -215,13 +215,13 @@ function destroyAllInvisablePoles(force)
 	local forcePoles = Surface.find_all_entities({force=force, type="electric-pole"})
 	
 	for _, entity in pairs(forcePoles) do
-      if entity.valid then
-		   for _, listEntity in ipairs(allInvisablePowerPoles) do
-            if (entity.name == listEntity) then
+		if entity.valid then
+			for _, listEntity in ipairs(allInvisablePowerPoles) do
+				if (entity.name == listEntity) then
 				   entity.destroy()
 				   break
-			   end
-         end
+				end
+			end
 		end
 	end
 end
