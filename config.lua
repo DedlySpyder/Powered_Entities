@@ -3,6 +3,9 @@
 --false will be the old way where the entities are linked to the power grid on their own
 manual_mode = true
 
+--This will make the powered entities only have enough wire reach to hit another like entity right next to it
+--For example: an assembling machine will only have enough wire reach to hit an assembler right next to it (to each side)
+minimum_wire_reach = false
 
 --The following lists are the entities that the mod supports
 --You can change which entities act as certain power poles by adding or removing the entities from the lists
