@@ -76,28 +76,34 @@ local connectionPoints = {
 	}
 
 invisableElectricPole1x1.name = "invisable-electric-pole-1x1"
-invisableElectricPole1x1.maximum_wire_distance = 5
-invisableElectricPole1x1.supply_area_distance = 1.5
-
 invisableElectricPole2x2.name = "invisable-electric-pole-2x2"
-invisableElectricPole2x2.maximum_wire_distance = 5
-invisableElectricPole2x2.supply_area_distance = 2
-
 invisableElectricPole3x3.name = "invisable-electric-pole-3x3"
-invisableElectricPole3x3.maximum_wire_distance = 5
-invisableElectricPole3x3.supply_area_distance = 2.5
-
 invisableElectricPole4x4.name = "invisable-electric-pole-4x4"
-invisableElectricPole4x4.maximum_wire_distance = 10
-invisableElectricPole4x4.supply_area_distance = 3
-
 invisableElectricPole5x5.name = "invisable-electric-pole-5x5"
-invisableElectricPole5x5.maximum_wire_distance = 12
-invisableElectricPole5x5.supply_area_distance = 3.5
-
 invisableElectricPole9x10.name = "invisable-electric-pole-9x10"
-invisableElectricPole9x10.maximum_wire_distance = 15
+
+invisableElectricPole1x1.supply_area_distance = 1.5
+invisableElectricPole2x2.supply_area_distance = 2
+invisableElectricPole3x3.supply_area_distance = 2.5
+invisableElectricPole4x4.supply_area_distance = 3
+invisableElectricPole5x5.supply_area_distance = 3.5
 invisableElectricPole9x10.supply_area_distance = 5.5
+
+if minimum_wire_reach then
+	invisableElectricPole1x1.maximum_wire_distance = 1
+	invisableElectricPole2x2.maximum_wire_distance = 2
+	invisableElectricPole3x3.maximum_wire_distance = 3
+	invisableElectricPole4x4.maximum_wire_distance = 4
+	invisableElectricPole5x5.maximum_wire_distance = 5
+	invisableElectricPole9x10.maximum_wire_distance = 10
+else
+	invisableElectricPole1x1.maximum_wire_distance = 5
+	invisableElectricPole2x2.maximum_wire_distance = 5
+	invisableElectricPole3x3.maximum_wire_distance = 5
+	invisableElectricPole4x4.maximum_wire_distance = 10
+	invisableElectricPole5x5.maximum_wire_distance = 12
+	invisableElectricPole9x10.maximum_wire_distance = 15
+end
 
 invisableElectricPoleCustom.name = "invisable-electric-pole-custom"
 invisableElectricPoleCustom.maximum_wire_distance = custom_power_pole_wire_distance

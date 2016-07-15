@@ -126,8 +126,8 @@ remote.add_interface("Powered_Entities", {
 	end,
 
 	--Test function, gives all entities effected by mod and some power poles if needed
-	-- /c remote.call("Powered_Entities", "testing")
-	testing = function()
+	-- /c remote.call("Powered_Entities", "debug_testing")
+	debug_testing = function()
 		if debug_mode then 
 			for _, player in pairs(game.players) do
 				for _, item in pairs(entities1x1) do
@@ -159,8 +159,8 @@ remote.add_interface("Powered_Entities", {
 	end,
 	
 	--Exports arrays to file
-	-- /c remote.call("Powered_Entities", "export_arrays")
-	export_arrays = function()
+	-- /c remote.call("Powered_Entities", "debug_export_arrays")
+	debug_export_arrays = function()
 		if debug_mode then
 			game.write_file("Powered_Entities_Export.txt", "", false)
 			game.write_file("Powered_Entities_Export.txt", "1x1\r\n", true)
