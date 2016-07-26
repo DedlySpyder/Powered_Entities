@@ -49,7 +49,6 @@ script.on_configuration_changed(function(data)
 	initializeGlobal()
 end)
 
-
 script.on_init(function(data)
 	initializeGlobal()
 end)
@@ -70,10 +69,6 @@ function entityBuilt(event)
 	end
 end
 
---Register events, references the function
-script.on_event(defines.events.on_robot_built_entity, entityBuilt)
-script.on_event(defines.events.on_built_entity, entityBuilt)
-
 --Check on destroying entities
 function entityDestroyed(event)
 	local entity = event.entity
@@ -87,11 +82,6 @@ function entityDestroyed(event)
 		destroyEntity(entity, invisablePowerPoles)
 	end
 end
-
---Register events, references the function
-script.on_event(defines.events.on_preplayer_mined_item, entityDestroyed)
-script.on_event(defines.events.on_robot_pre_mined, entityDestroyed)
-script.on_event(defines.events.on_entity_died, entityDestroyed)
 
 --Check on research completed
 function researchCompleted(event)
@@ -107,9 +97,6 @@ function researchCompleted(event)
 	end
 end
 
---Register events, references the function
-script.on_event(defines.events.on_research_finished, researchCompleted)
-
 --Check when a player connects to a game
 function on_player_connected(event)
 	local player = game.players[event.player_index]
@@ -117,8 +104,6 @@ function on_player_connected(event)
 		drawRecalculateButton(player)
 	end
 end
-
-script.on_event(defines.events.on_player_joined_game, on_player_connected)
 
 --Check when a player clicks a GUI button
 function on_button_click(event)
@@ -133,6 +118,14 @@ function on_button_click(event)
 	end
 end
 
+--Register event handlers
+script.on_event(defines.events.on_robot_built_entity, entityBuilt)
+script.on_event(defines.events.on_preplayer_mined_item, entityDestroyed)
+script.on_event(defines.events.on_robot_pre_mined, entityDestroyed)
+script.on_event(defines.events.on_entity_died, entityDestroyed)
+script.on_event(defines.events.on_research_finished, researchCompleted)
+script.on_event(defines.events.on_player_joined_game, on_player_connected)
+script.on_event(defines.events.on_built_entity, entityBuilt)
 script.on_event(defines.events.on_gui_click, on_button_click)
 
 --Displays debug messages

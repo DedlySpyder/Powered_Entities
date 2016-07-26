@@ -200,6 +200,7 @@ end
 
 --GUI functions
 
+--Draw the recalculate button for the LuaPlayer
 function drawRecalculateButton(player)
 	debugLog("Drawing button")
 	if not (player.gui.top.poweredEntitiesRecalculateButton ~= nil and player.gui.top.poweredEntitiesRecalculateButton.valid) then
@@ -207,6 +208,7 @@ function drawRecalculateButton(player)
 	end
 end
 
+--Draw the recalculate button for all players
 function drawRecalculateButtonAll()
 	for _, player in pairs(game.players) do
 		drawRecalculateButton(player)
