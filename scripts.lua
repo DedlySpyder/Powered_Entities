@@ -198,6 +198,22 @@ function placeAllPolesAutomatic(techForce)
 	end
 end
 
+--GUI functions
+
+function drawRecalculateButton(player)
+	debugLog("Drawing button")
+	if not (player.gui.top.poweredEntitiesRecalculateButton ~= nil and player.gui.top.poweredEntitiesRecalculateButton.valid) then
+		player.gui.top.add{type="button", name="poweredEntitiesRecalculateButton", caption="Recalculate Powered Entities"}
+	end
+end
+
+function drawRecalculateButtonAll()
+	for _, player in pairs(game.players) do
+		drawRecalculateButton(player)
+	end
+end
+
+
 --Internal functions
 
 --Used by placeAllPolesAutomatic to actually find the entities that need poles
@@ -228,6 +244,13 @@ end
 
 --Returns a search BoundingBox
 function searchBox(entity)
-	local selectionBox = entity.prototype.selection_box
+	local selectionBox
+	
+	if (entity.name == "entity-ghost") then
+		selectionBox = entity.ghost_prototype.selection_box
+	else
+		selectionBox = entity.prototype.selection_box
+	end
+	
 	return Area.offset(selectionBox, entity.position)
 end

@@ -40,11 +40,16 @@ script.on_configuration_changed(function(data)
 				placeAllPolesAutomatic(nil)
 			end
 		end
+		if data.mod_changes["Powered_Entities"].old_version < "0.3.7" then
+			if force.technologies["powered-entities"].researched then
+				drawRecalculateButtonAll()
+			end
+		end
 	end
 	initializeGlobal()
 end)
 
---
+
 script.on_init(function(data)
 	initializeGlobal()
 end)
@@ -93,13 +98,42 @@ function researchCompleted(event)
 	local tech = event.research
 	
 	--Check for the tech, and if in automatic mode
-	if (tech.name == "powered-entities" and not manual_mode) then
-		placeAllPolesAutomatic(tech.force)
+	if (tech.name == "powered-entities") then
+		drawRecalculateButtonAll()
+		
+		if not manual_mode then
+			placeAllPolesAutomatic(tech.force)
+		end
 	end
 end
 
 --Register events, references the function
 script.on_event(defines.events.on_research_finished, researchCompleted)
+
+--Check when a player connects to a game
+function on_player_connected(event)
+	local player = game.players[event.player_index]
+	if player.force.technologies["powered-entities"].researched then
+		drawRecalculateButton(player)
+	end
+end
+
+script.on_event(defines.events.on_player_joined_game, on_player_connected)
+
+--Check when a player clicks a GUI button
+function on_button_click(event)
+	if (event.element.name == "poweredEntitiesRecalculateButton") then
+		initializeGlobal()
+		
+		if manual_mode then
+			placeAllPolesManual()
+		else
+			placeAllPolesAutomatic(nil)
+		end
+	end
+end
+
+script.on_event(defines.events.on_gui_click, on_button_click)
 
 --Displays debug messages
 function debugLog(message)
