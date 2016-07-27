@@ -40,9 +40,13 @@ script.on_configuration_changed(function(data)
 				placeAllPolesAutomatic(nil)
 			end
 		end
-		if data.mod_changes["Powered_Entities"].old_version < "0.3.7" then
-			if force.technologies["powered-entities"].researched then
-				drawRecalculateButtonAll()
+		if data.mod_changes["Powered_Entities"].old_version < "0.3.8" then
+			for _, force in pairs(game.forces) do
+				if force.technologies["powered-entities"].researched then
+					for _, player in pairs(force.players) do
+						drawRecalculateButton(player)
+					end
+				end
 			end
 		end
 	end
