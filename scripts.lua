@@ -250,6 +250,8 @@ function searchBox(entity)
 	
 	if (entity.name == "entity-ghost") then
 		selectionBox = entity.ghost_prototype.selection_box
+	elseif (entity.name == "tile-ghost") then
+		selectionBox = {{-1, -1}, {1, 1}}
 	else
 		selectionBox = entity.prototype.selection_box
 	end
