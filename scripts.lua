@@ -78,49 +78,56 @@ function buildInvisablePole(entity)
 	--Check for a 1x1 entity
 	if checkEntityList(entity, global.poweredEntities["entities1x1"]) then
 		--Build a power pole for the entity
-		entity.surface.create_entity{name="invisable-electric-pole-1x1", position=entity.position, force=entity.force}
+		local pole = entity.surface.create_entity{name="invisable-electric-pole-1x1", position=entity.position, force=entity.force}
+		pole.destructible = false
 		return true
 	end
 	
 	--Check for a 2x2 entity
 	if checkEntityList(entity, global.poweredEntities["entities2x2"]) then
 		--Build a power pole for the entity
-		entity.surface.create_entity{name="invisable-electric-pole-2x2", position=entity.position, force=entity.force} 
+		local pole = entity.surface.create_entity{name="invisable-electric-pole-2x2", position=entity.position, force=entity.force} 
+		pole.destructible = false
 		return true
 	end
 	
 	--Check for a 3x3 entity
 	if checkEntityList(entity, global.poweredEntities["entities3x3"]) then
 		--Build a power pole for the entity
-		entity.surface.create_entity{name="invisable-electric-pole-3x3", position=entity.position, force=entity.force} 
+		local pole = entity.surface.create_entity{name="invisable-electric-pole-3x3", position=entity.position, force=entity.force} 
+		pole.destructible = false
 		return true
 	end
 	
 	--Check for a 4x4 entity
 	if checkEntityList(entity, global.poweredEntities["entities4x4"]) then
 		--Build a power pole for the entity
-		entity.surface.create_entity{name="invisable-electric-pole-4x4", position=entity.position, force=entity.force} 
+		local pole = entity.surface.create_entity{name="invisable-electric-pole-4x4", position=entity.position, force=entity.force} 
+		pole.destructible = false
 		return true
 	end
 	
 	--Check for a 5x5 entity
 	if checkEntityList(entity, global.poweredEntities["entities5x5"]) then
 		--Build a power pole for the entity
-		entity.surface.create_entity{name="invisable-electric-pole-5x5", position=entity.position, force=entity.force} 
+		local pole = entity.surface.create_entity{name="invisable-electric-pole-5x5", position=entity.position, force=entity.force} 
+		pole.destructible = false
 		return true
 	end
 	
 	--Check for a 9x10 entity
 	if checkEntityList(entity, global.poweredEntities["entities9x10"]) then
 		--Build a power pole for the entity
-		entity.surface.create_entity{name="invisable-electric-pole-9x10", position=entity.position, force=entity.force} 
+		local pole = entity.surface.create_entity{name="invisable-electric-pole-9x10", position=entity.position, force=entity.force} 
+		pole.destructible = false
 		return true
 	end
 	
 	--Check for a 1x1 entity
 	if checkEntityList(entity, global.poweredEntities["entitiesCustom"]) then
 		--Build a power pole for the entity
-		entity.surface.create_entity{name="invisable-electric-pole-custom", position=entity.position, force=entity.force} 
+		local pole = entity.surface.create_entity{name="invisable-electric-pole-custom", position=entity.position, force=entity.force} 
+		pole.destructible = false
 		return true
 	end
 	return false

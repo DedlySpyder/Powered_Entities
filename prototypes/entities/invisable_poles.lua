@@ -165,6 +165,14 @@ invisableElectricPole5x5.connection_points = connectionPoints
 invisableElectricPole9x10.connection_points = connectionPoints
 invisableElectricPoleCustom.connection_points = connectionPoints
 
+invisableElectricPole1x1.max_health = 999999999999
+invisableElectricPole2x2.max_health = 999999999999
+invisableElectricPole3x3.max_health = 999999999999
+invisableElectricPole4x4.max_health = 999999999999
+invisableElectricPole5x5.max_health = 999999999999
+invisableElectricPole9x10.max_health = 999999999999
+invisableElectricPoleCustom.max_health = 999999999999
+
 --[[invisableElectricPole1x1. = nil
 invisableElectricPole2x2. = nil
 invisableElectricPole3x3. = nil
