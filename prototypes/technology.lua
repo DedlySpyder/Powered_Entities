@@ -4,6 +4,7 @@ data:extend ({
     type = "technology",
     name = "powered-entities",
     icon = "__Powered_Entities__/graphics/power_pad_tech.png",
+	icon_size = 64,
     effects =
     {
       {
