@@ -1,11 +1,11 @@
 --This will change between manual and automatic mode
 --true will force the player to make power pads to have entities be linked to the power grid
 --false will be the old way where the entities are linked to the power grid on their own
-manual_mode = true
+manual_mode = settings.startup["Powered_Entities_manual_mode"].value
 
 --This will make the powered entities only have enough wire reach to hit another like entity right next to it
 --For example: an assembling machine will only have enough wire reach to hit an assembler right next to it (to each side)
-minimum_wire_reach = false
+minimum_wire_reach = settings.startup["Powered_Entities_minimum_wire_reach"].value
 
 --The following lists are the entities that the mod supports
 --You can change which entities act as certain power poles by adding or removing the entities from the lists
