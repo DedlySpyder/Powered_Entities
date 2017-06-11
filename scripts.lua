@@ -253,14 +253,18 @@ end
 
 --Returns a search BoundingBox
 function searchBox(entity)
-	local selectionBox
+	local defaultBox = {{-1, -1}, {1, 1}}
+	local selectionBox = entity.prototype.selection_box or entity.ghost_prototype.selection_box
 	
-	if (entity.name == "entity-ghost") then
-		selectionBox = entity.ghost_prototype.selection_box
-	elseif (entity.name == "tile-ghost") then
-		selectionBox = {{-1, -1}, {1, 1}}
-	else
-		selectionBox = entity.prototype.selection_box
+	--Verify that the selection box is valid for searching
+	if not selectionBox then
+		selectionBox = defaultBox
+	elseif selectionBox.left_top then
+		if selectionBox.left_top.x == selectionBox.right_bottom.x or selectionBox.left_top.y == selectionBox.right_bottom.y then
+			selectionBox = defaultBox
+		end
+	elseif selectionBox[1][1] == selectionBox[2][1] or selectionBox[1][2] == selectionBox[2][2] then
+		selectionBox = defaultBox
 	end
 	
 	return Area.offset(selectionBox, entity.position)
