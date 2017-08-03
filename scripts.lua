@@ -211,7 +211,9 @@ end
 function drawRecalculateButton(player)
 	debugLog("Drawing button")
 	if not (player.gui.top.poweredEntitiesRecalculateButton ~= nil and player.gui.top.poweredEntitiesRecalculateButton.valid) then
-		player.gui.top.add{type="button", name="poweredEntitiesRecalculateButton", caption={"Powered-Entities-recalculate-entities-button"}}
+		if settings.global["Powered_Entities_recalculate_show"].value then
+			player.gui.top.add{type="button", name="poweredEntitiesRecalculateButton", caption={"Powered-Entities-recalculate-entities-button"}}
+		end
 	end
 end
 

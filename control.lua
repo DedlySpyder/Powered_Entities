@@ -143,6 +143,31 @@ function on_button_click(event)
 	end
 end
 
+--Check when a player presses the hotkey
+function on_hotkey_click(event)
+	initializeGlobal()
+	
+	if manual_mode then
+		placeAllPolesManual()
+	else
+		placeAllPolesAutomatic(nil)
+	end
+end
+
+--Check when a setting is changed
+function on_setting_changed(event)
+	local player = game.players[event.player_index]
+	if event.setting == "Powered_Entities_recalculate_show" then
+		if player.gui.top.poweredEntitiesRecalculateButton and player.gui.top.poweredEntitiesRecalculateButton.valid then
+			player.gui.top.poweredEntitiesRecalculateButton.destroy()
+		else
+			if player.force.technologies["powered-entities"].researched then
+				drawRecalculateButton(player)
+			end
+		end
+	end
+end
+
 --Register event handlers
 script.on_event(defines.events.on_robot_built_entity, entityBuilt)
 script.on_event(defines.events.on_preplayer_mined_item, entityDestroyed)
@@ -152,6 +177,9 @@ script.on_event(defines.events.on_research_finished, researchCompleted)
 script.on_event(defines.events.on_player_joined_game, on_player_connected)
 script.on_event(defines.events.on_built_entity, entityBuilt)
 script.on_event(defines.events.on_gui_click, on_button_click)
+script.on_event(defines.events.on_runtime_mod_setting_changed, on_setting_changed)
+script.on_event("powered_entities_recalculate", on_hotkey_click)
+
 
 --Displays debug messages
 function debugLog(message)
