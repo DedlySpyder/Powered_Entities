@@ -170,7 +170,7 @@ end
 
 --Register event handlers
 script.on_event(defines.events.on_robot_built_entity, entityBuilt)
-script.on_event(defines.events.on_preplayer_mined_item, entityDestroyed)
+script.on_event(defines.events.on_pre_player_mined_item, entityDestroyed)
 script.on_event(defines.events.on_robot_pre_mined, entityDestroyed)
 script.on_event(defines.events.on_entity_died, entityDestroyed)
 script.on_event(defines.events.on_research_finished, researchCompleted)
