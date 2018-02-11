@@ -6,7 +6,7 @@ local invisableElectricPole5x5 = util.table.deepcopy(data.raw["electric-pole"]["
 local invisableElectricPole9x10 = util.table.deepcopy(data.raw["electric-pole"]["small-electric-pole"])
 local invisableElectricPoleCustom = util.table.deepcopy(data.raw["electric-pole"]["small-electric-pole"])
 
-local flags = {"placeable-player", "player-creation", "placeable-off-grid"}
+local flags = {"placeable-player", "player-creation", "placeable-off-grid", "not-blueprintable", "not-deconstructable", "not-on-map"}
 local collisionBox = {{-0, -0}, {0, 0}}
 local collisionMask = {"ghost-layer"}
 local pictures = {
