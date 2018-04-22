@@ -214,3 +214,69 @@ function check_stormwalls(mod)
 		})
 	end
 end
+
+
+function check_nauvisday(mod)
+	if (mod == "NauvisDay") then
+		add_to_table({
+			{"3x3", "air-filter-machine-1"},
+			{"3x3", "air-filter-machine-2"},
+			{"3x3", "air-filter-machine-3"},
+			{"3x3", "air-filter-machine-4"},
+			{"3x3", "pollution-fan"},
+			{"3x3", "venting-machine"},
+			{"5x5", "borer"}
+		})
+	end
+end
+
+function check_dp77sulfur(mod)
+	if (mod == "Dp77s-Sulfur-Mod") then
+		add_to_table({
+			{"3x3", "purifying-machine"}
+		})
+	end
+end
+
+function check_nanobots(mod)
+	if (mod == "Nanobots") then
+		add_to_table({
+			{"2x2", "roboport-interface-main"}
+		})
+	end
+end
+
+function check_specializedoil(mod)
+	if (mod == "specialized-oil-processing") then
+		add_to_table({
+			{"5x5", "advanced-oil-refinery"}
+		})
+	end
+end
+
+function check_deepmine(mod)
+	if (mod == "DeepMine") then
+		add_to_table({
+			{"3x3", "deep-mine"},
+			{"3x3", "deep-mine-2"}
+		})
+	end
+end
+
+function check_macerator(mod)
+	if (mod == "Macerator") then
+		add_to_table({
+			{"2x2", "macerator"},
+			{"2x2", "electric-macerator"}
+		})
+	end
+end
+
+function check_poweronabelt(mod)
+	if (mod == "PowerBelt") then
+		add_to_table({
+			{"3x3", "micromario-charging-station"},
+			{"3x3", "discharging-station"}
+		})
+	end
+end

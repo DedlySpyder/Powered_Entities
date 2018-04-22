@@ -38,6 +38,13 @@ function modCompadibility()
 		check_wirelesssignals(mod)
 		check_stormwalls(mod)
 		check_realisticreactors(mod)
+		check_nauvisday(mod)
+		check_dp77sulfur(mod)
+		check_nanobots(mod)
+		check_specializedoil(mod)
+		check_deepmine(mod)
+		check_macerator(mod)
+		check_poweronabelt(mod)
 	end
 end
 
