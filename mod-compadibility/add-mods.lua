@@ -280,3 +280,41 @@ function check_poweronabelt(mod)
 		})
 	end
 end
+
+function check_pyindustry(mod)
+	if (mod == "pyindustry") then
+		add_to_table({
+			{"3x3", "py-roboport-mk01"},
+			{"3x3", "py-recharge-station-mk01"},
+			{"3x3", "py-sinkhole"},
+			{"3x3", "py-local-radar"},
+			{"4x4", "accumulator-mk01"},
+			{"1x1", "py-gas-vent"}
+		})
+	end
+end
+
+function check_reversefactory(mod)
+	if (mod == "reverse-factory") then
+		add_to_table({
+			{"3x3", "reverse-factory-1"},
+			{"3x3", "reverse-factory-2"}
+		})
+	end
+end
+
+function check_riteg(mod)
+	if (mod == "RITEG") then
+		add_to_table({
+			{"3x3", "RITEG-1"}
+		})
+	end
+end
+
+function check_sigmanuclear(mod)
+	if (mod == "SigmaOne_Nuclear") then
+		add_to_table({
+			{"3x3", "rtg"}
+		})
+	end
+end

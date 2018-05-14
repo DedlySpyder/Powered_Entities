@@ -62,21 +62,20 @@ script.on_load(function(data)
 	register_events()
 end)
 
- function register_events()
+function register_events()
 	if remote.interfaces["picker"] and remote.interfaces["picker"]["dolly_moved_entity_id"] then
+		function on_picker_dollies_moved(event)
+			local entity = event.moved_entity
+			entityDestroyed({ entity = entity })
+			entityBuilt({ created_entity = entity  })						
+		end
 		
-			function on_picker_dollies_moved(event)
-				local entity = event.moved_entity
-				entityDestroyed({ entity = entity })
-				entityBuilt({ created_entity = entity  })						
-			end
-			
-			local eventID = remote.call("picker", "dolly_moved_entity_id")
-			if type(eventID) == "number" then
-				script.on_event(eventID, on_picker_dollies_moved)
-			end
+		local eventID = remote.call("picker", "dolly_moved_entity_id")
+		if type(eventID) == "number" then
+			script.on_event(eventID, on_picker_dollies_moved)
+		end
 	end
- end
+end
  
  --Check on building entities
 function entityBuilt(event)

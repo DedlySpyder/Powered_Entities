@@ -45,6 +45,10 @@ function modCompadibility()
 		check_deepmine(mod)
 		check_macerator(mod)
 		check_poweronabelt(mod)
+		check_pyindustry(mod)
+		check_reversefactory(mod)
+		check_riteg(mod)
+		check_sigmanuclear(mod)
 	end
 end
 

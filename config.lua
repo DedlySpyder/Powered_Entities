@@ -29,7 +29,8 @@ entities3x3 = {	"assembling-machine-1",
 				"solar-panel",
 				"chemical-plant", 
 				"beacon",
-				"pumpjack"}
+				"pumpjack",
+				"centrifuge"}
 
 entities4x4 = {"roboport"}
 
