@@ -36,13 +36,19 @@ entities4x4 = {"roboport"}
 
 entities5x5 = {"oil-refinery"}
 
+entities6x6 = {}
+
+entities7x7 = {}
+
+entities8x8 = {}
+
+entities9x9 = {}
+
 entities9x10 = {"rocket-silo"}
 
---This list is highly configurable
---The other two variables here set the wire reach distance and the power radius of the entities in this list
-entitiesCustom = {}
-custom_power_pole_wire_distance = 1
-custom_power_pole_power_radius = 5
+entities10x10 = {}
+
+entities12x12 = {}
 
 --Debug
 debug_mode = false

@@ -1,4 +1,5 @@
---bobassembly
+--bobs mods
+--pyanodons mods
 function check_doublefurnace(mod)
 	if (mod == "DoubleFurnace") then
 		add_to_table({
@@ -44,7 +45,8 @@ function check_airfilteringpatched(mod)
 			{"3x3", "air-filter-machine-mk2"},
 			{"3x3", "air-filter-machine-mk3"},
 			{"3x3", "air-filter-machine-mk4"},
-			{"3x3", "air-filter-machine-mk5"}
+			{"3x3", "air-filter-machine-mk5"},
+			{"3x3", "air-filter-machine-mk6"}
 		})
 	end
 end
@@ -53,14 +55,16 @@ function check_bioindustries(mod)
 	if (mod == "Bio_Industries") then
 		add_to_table({
 			{"2x2", "bi-stone-crusher"},
-			{"3x3", "bio-greenhouse"},
-			{"3x3", "bio_boiler"},
+			{"3x3", "bi-bio-greenhouse"},
+			{"3x3", "bi-bio-boiler"},
 			{"3x3", "bi-cokery"},
-			{"3x3", "bi-Bio_Garden"},
+			{"3x3", "bi-bio-garden"},
 			{"3x3", "bi-bioreactor"},
-			{"9x10", "bi-bio_farm"},
-			{"9x10", "bi_bio_Solar_Farm"},
-			{"5x5", "bi_accumulator"}
+			{"9x9", "bi-bio-farm"},
+			{"9x9", "bi-bio-solar-farm"},
+			{"5x5", "bi-bio-accumulator"},
+			{"9x9", "bi-solar-boiler-panel"},
+			{"9x9", "bi-arboretum"}
 		})
 	end
 end
@@ -131,7 +135,7 @@ end
 function check_largelamp(mod)
 	if (mod == "LargeLamp") then
 		add_to_table({
-			{"1x1", "LargeLamp"}
+			{"9x9", "LargeLamp"}
 		})
 	end
 end
@@ -281,19 +285,6 @@ function check_poweronabelt(mod)
 	end
 end
 
-function check_pyindustry(mod)
-	if (mod == "pyindustry") then
-		add_to_table({
-			{"3x3", "py-roboport-mk01"},
-			{"3x3", "py-recharge-station-mk01"},
-			{"3x3", "py-sinkhole"},
-			{"3x3", "py-local-radar"},
-			{"4x4", "accumulator-mk01"},
-			{"1x1", "py-gas-vent"}
-		})
-	end
-end
-
 function check_reversefactory(mod)
 	if (mod == "reverse-factory") then
 		add_to_table({
@@ -315,6 +306,29 @@ function check_sigmanuclear(mod)
 	if (mod == "SigmaOne_Nuclear") then
 		add_to_table({
 			{"3x3", "rtg"}
+		})
+	end
+end
+
+function check_logisticmine(mod)
+	if (mod == "LogisticMine") then
+		add_to_table({
+			{"3x3", "logistic-mining-drill"},
+			{"3x3", "logistic-mining-drill-2"}
+		})
+	end
+end
+
+function check_minimachines(mod)
+	if (mod == "mini-machines") then
+		add_to_table({
+			{"2x2", "mini-assembler-1"},
+			{"2x2", "mini-assembler-2"},
+			{"2x2", "mini-assembler-3"},
+			{"2x2", "mini-furnace-1"},
+			{"2x2", "mini-chem-plant-1"},
+			{"2x2", "mini-beacon-1"},
+			{"3x3", "mini-refinery-1"}
 		})
 	end
 end

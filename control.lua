@@ -10,16 +10,26 @@ invisablePowerPoles = {	"invisable-electric-pole-1x1",
 						"invisable-electric-pole-3x3",
 						"invisable-electric-pole-4x4",
 						"invisable-electric-pole-5x5",
+						"invisable-electric-pole-6x6",
+						"invisable-electric-pole-7x7",
+						"invisable-electric-pole-8x8",
+						"invisable-electric-pole-9x9",
 						"invisable-electric-pole-9x10",
-						"invisable-electric-pole-custom"}
+						"invisable-electric-pole-10x10",
+						"invisable-electric-pole-12x12"}
 
 allInvisablePowerPoles = {	"invisable-electric-pole-1x1",
 							"invisable-electric-pole-2x2",
 							"invisable-electric-pole-3x3",
 							"invisable-electric-pole-4x4",
 							"invisable-electric-pole-5x5",
+							"invisable-electric-pole-6x6",
+							"invisable-electric-pole-7x7",
+							"invisable-electric-pole-8x8",
+							"invisable-electric-pole-9x9",							
 							"invisable-electric-pole-9x10",
-							"invisable-electric-pole-custom",
+							"invisable-electric-pole-10x10",							
+							"invisable-electric-pole-12x12",
 							"power-pad-pole"}				
 								
 
@@ -224,10 +234,25 @@ remote.add_interface("Powered_Entities", {
 				for _, item in pairs(entities5x5) do
 					player.insert(item)
 				end
+				for _, item in pairs(entities6x6) do
+					player.insert(item)
+				end
+				for _, item in pairs(entities7x7) do
+					player.insert(item)
+				end
+				for _, item in pairs(entities8x8) do
+					player.insert(item)
+				end
+				for _, item in pairs(entities9x9) do
+					player.insert(item)
+				end
 				for _, item in pairs(entities9x10) do
 					player.insert(item)
 				end
-				for _, item in pairs(entitiesCustom) do
+				for _, item in pairs(entities10x10) do
+					player.insert(item)
+				end
+				for _, item in pairs(entities12x12) do
 					player.insert(item)
 				end
 				if manual_mode then
@@ -262,12 +287,32 @@ remote.add_interface("Powered_Entities", {
 			for _, item in pairs(entities5x5) do
 				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
+			game.write_file("Powered_Entities_Export.txt", "6x6\r\n", true)
+			for _, item in pairs(entities6x6) do
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
+			end
+			game.write_file("Powered_Entities_Export.txt", "7x7\r\n", true)
+			for _, item in pairs(entities7x7) do
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
+			end
+			game.write_file("Powered_Entities_Export.txt", "8x8\r\n", true)
+			for _, item in pairs(entities8x8) do
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
+			end
+			game.write_file("Powered_Entities_Export.txt", "9x9\r\n", true)
+			for _, item in pairs(entities9x9) do
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
+			end
 			game.write_file("Powered_Entities_Export.txt", "9x10\r\n", true)
 			for _, item in pairs(entities9x10) do
 				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
-			game.write_file("Powered_Entities_Export.txt", "Custom\r\n", true)
-			for _, item in pairs(entitiesCustom) do
+			game.write_file("Powered_Entities_Export.txt", "10x10\r\n", true)
+			for _, item in pairs(entities10x10) do
+				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
+			end
+			game.write_file("Powered_Entities_Export.txt", "12x12\r\n", true)
+			for _, item in pairs(entities12x12) do
 				game.write_file("Powered_Entities_Export.txt", item.."\r\n", true)
 			end
 		end

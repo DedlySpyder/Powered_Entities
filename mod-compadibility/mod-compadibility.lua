@@ -1,9 +1,10 @@
 require "bobs-mods"
+require "pyanodons-mods"
 require "add-mods"
 
 --Format for each entry in the table is {"entity_type", "entity_name"}
 --Valid entity_types are as follows:
---1x1, 2x2, 3x3, 4x4, 5x5, 9x10, custom
+--1x1, 2x2, 3x3, 4x4, 5x5, 6x6, 7x7, 8x8, 9x9, 9x10, 10x10, 12x12
 
 --Iterates over all of the mods and adds compadible entities to the arrays
 function modCompadibility()
@@ -16,6 +17,10 @@ function modCompadibility()
 		check_bobpower(mod)
 		check_bobtech(mod)
 		check_bobwarfare(mod)
+		check_pyindustry(mod)
+		check_pyhightech(mod)
+		check_pycoalprocessing(mod)
+		check_pyfusionenergy(mod)
 		check_doublefurnace(mod)
 		check_AssemblyZero(mod)
 		check_FlareStack(mod)
@@ -45,10 +50,11 @@ function modCompadibility()
 		check_deepmine(mod)
 		check_macerator(mod)
 		check_poweronabelt(mod)
-		check_pyindustry(mod)
 		check_reversefactory(mod)
 		check_riteg(mod)
 		check_sigmanuclear(mod)
+		check_logisticmine(mod)
+		check_minimachines(mod)		
 	end
 end
 
@@ -69,10 +75,20 @@ function add_to_table(array)
 			table.insert(entities4x4, entity_name)
 		elseif (entity_type == "5x5") then
 			table.insert(entities5x5, entity_name)
+		elseif (entity_type == "6x6") then
+			table.insert(entities6x6, entity_name)
+		elseif (entity_type == "7x7") then
+			table.insert(entities7x7, entity_name)
+		elseif (entity_type == "8x8") then
+			table.insert(entities8x8, entity_name)
+		elseif (entity_type == "9x9") then
+			table.insert(entities9x9, entity_name)
 		elseif (entity_type == "9x10") then
 			table.insert(entities9x10, entity_name)
-		elseif (entity_type == "custom") then
-			table.insert(entitiesCustom, entity_name)
+		elseif (entity_type == "10x10") then
+			table.insert(entities10x10, entity_name)
+		elseif (entity_type == "12x12") then
+			table.insert(entities12x12, entity_name)
 		end
 	end
 end
