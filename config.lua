@@ -44,9 +44,9 @@ entities8x8 = {}
 
 entities9x9 = {}
 
-entities9x10 = {"rocket-silo"}
+entities9x10 = {}
 
-entities10x10 = {}
+entities10x10 = {"rocket-silo"}
 
 entities12x12 = {}
 
