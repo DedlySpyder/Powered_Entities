@@ -135,7 +135,7 @@ end
 function check_largelamp(mod)
 	if (mod == "LargeLamp") then
 		add_to_table({
-			{"9x9", "LargeLamp"}
+			{"1x1", "LargeLamp"}
 		})
 	end
 end
