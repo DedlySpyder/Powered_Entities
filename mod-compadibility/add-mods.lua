@@ -328,7 +328,13 @@ function check_minimachines(mod)
 			{"2x2", "mini-furnace-1"},
 			{"2x2", "mini-chem-plant-1"},
 			{"2x2", "mini-beacon-1"},
-			{"3x3", "mini-refinery-1"}
+			{"3x3", "mini-refinery-1"},
+			{"2x2", "mini-miner-1"},
+			{"2x2", "mini-miner-2"},
+			{"2x2", "mini-miner-3"},
+			{"2x2", "mini-miner-4"},
+			{"2x2", "mini-miner-5"},
+			{"2x2", "mini-radar-1"}
 		})
 	end
 end
