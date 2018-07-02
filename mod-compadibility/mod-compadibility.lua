@@ -55,6 +55,9 @@ function modCompadibility()
 		check_sigmanuclear(mod)
 		check_logisticmine(mod)
 		check_minimachines(mod)		
+		check_assemblyline(mod)
+		check_morescience(mod)
+		check_miningplus(mod)
 	end
 end
 
