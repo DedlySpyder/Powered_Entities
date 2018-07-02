@@ -338,3 +338,32 @@ function check_minimachines(mod)
 		})
 	end
 end
+
+function check_assemblyline(mod)
+	if (mod == "assemblyline") then
+		add_to_table({
+			{"3x3", "assembly-line-1"},
+			{"3x3", "assembly-line-2"},
+			{"3x3", "assembly-line-3"}
+		})
+	end
+end
+
+function check_morescience(mod)
+	if (mod == "MoreScience") then
+		add_to_table({
+			{"3x3", "seed-extractor"},
+			{"5x5", "wood-plantation"},
+			{"3x3", "lab-mk2"}
+		})
+	end
+end
+
+function check_miningplus(mod)
+	if (mod == "MiningPlus") then
+		add_to_table({
+			{"3x3", "advanced-mining-drill"},
+			{"5x5", "elite-mining-drill"}
+		})
+	end
+end
