@@ -213,7 +213,35 @@ remote.add_interface("Powered_Entities", {
 			placeAllPolesAutomatic(nil)
 		end
 	end,
-
+	-- Compatibility function, allow mods to add their entities by themselves to the list
+	-- /c remote.call("Powered_Entities", "add","steam-engine","3x3")
+	add = function(entity_name, entity_type)
+		if (entity_type == "1x1") then
+			table.insert(entities1x1, entity_name)
+		elseif (entity_type == "2x2") then
+			table.insert(entities2x2, entity_name)
+		elseif (entity_type == "3x3") then
+			table.insert(entities3x3, entity_name)
+		elseif (entity_type == "4x4") then
+			table.insert(entities4x4, entity_name)
+		elseif (entity_type == "5x5") then
+			table.insert(entities5x5, entity_name)
+		elseif (entity_type == "6x6") then
+			table.insert(entities6x6, entity_name)
+		elseif (entity_type == "7x7") then
+			table.insert(entities7x7, entity_name)
+		elseif (entity_type == "8x8") then
+			table.insert(entities8x8, entity_name)
+		elseif (entity_type == "9x9") then
+			table.insert(entities9x9, entity_name)
+		elseif (entity_type == "9x10") then
+			table.insert(entities9x10, entity_name)
+		elseif (entity_type == "10x10") then
+			table.insert(entities10x10, entity_name)
+		elseif (entity_type == "12x12") then
+			table.insert(entities12x12, entity_name)
+		end
+	end,
 	--Test function, gives all entities effected by mod and some power poles if needed
 	-- /c remote.call("Powered_Entities", "debug_testing")
 	debug_testing = function()
