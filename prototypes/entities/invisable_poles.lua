@@ -16,69 +16,26 @@ local collisionBox = {{-0, -0}, {0, 0}}
 local collisionMask = {"ghost-layer"}
 local pictures = {
 				  filename = "__Powered_Entities__/graphics/invisible_power_pole.png",
-				  width = 0,
-				  height = 0,
-				  direction_count = 4,
-				  shift = {1.4, -1.1}
+				  width = 1,
+				  height = 1,
+				  direction_count = 1
 				 }
 local connectionPoints = {
-	  {
-		shadow =
-		{
-		  copper = {0, -0.2},
-		  red = {0, 0},
-		  green = {0, 0}
-		},
-		wire =
-		{
-		  copper = {0, -0.2},
-		  red = {0,0},
-		  green = {0,0}
-		}
-	  },
-	  {
-		shadow =
-		{
-		  copper = {0, -0.2},
-		  red = {0, 0},
-		  green = {0, 0}
-		},
-		wire =
-		{
-		  copper = {0, -0.2},
-		  red = {0,0},
-		  green = {0,0}
-		}
-	  },
-	  {
-		shadow =
-		{
-		  copper = {0, -0.2},
-		  red = {0, 0},
-		  green = {0, 0}
-		},
-		wire =
-		{
-		  copper = {0, -0.2},
-		  red = {0,0},
-		  green = {0,0}
-		}
-	  },
-	  {
-		shadow =
-		{
-		  copper = {0, -0.2},
-		  red = {0, 0},
-		  green = {0, 0}
-		},
-		wire =
-		{
-		  copper = {0, -0.2},
-		  red = {0,0},
-		  green = {0,0}
-		}
-	  }
+  {
+	shadow =
+	{
+	  copper = {0, -0.2},
+	  red = {0, 0},
+	  green = {0, 0}
+	},
+	wire =
+	{
+	  copper = {0, -0.2},
+	  red = {0,0},
+	  green = {0,0}
 	}
+  }
+}
 
 invisableElectricPole1x1.name = "invisable-electric-pole-1x1"
 invisableElectricPole2x2.name = "invisable-electric-pole-2x2"

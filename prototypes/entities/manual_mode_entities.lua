@@ -79,55 +79,12 @@ data:extend ({
 	{
 	  filename = "__Powered_Entities__/graphics/invisible_power_pole.png",
 	  --priority = "extra-high",
-	  width = 0,
-	  height = 0,
-	  direction_count = 4,
-	  shift = {1.4, -1.1}
+	  width = 1,
+	  height = 1,
+	  direction_count = 1
 	},
 	connection_points =
 	{
-	  {
-		shadow =
-		{
-		  copper = {0, -0.2},
-		  red = {0, 0},
-		  green = {0, 0}
-		},
-		wire =
-		{
-		  copper = {0, -0.2},
-		  red = {0,0},
-		  green = {0,0}
-		}
-	  },
-	  {
-		shadow =
-		{
-		  copper = {0, -0.2},
-		  red = {0, 0},
-		  green = {0, 0}
-		},
-		wire =
-		{
-		  copper = {0, -0.2},
-		  red = {0,0},
-		  green = {0,0}
-		}
-	  },
-	  {
-		shadow =
-		{
-		  copper = {0, -0.2},
-		  red = {0, 0},
-		  green = {0, 0}
-		},
-		wire =
-		{
-		  copper = {0, -0.2},
-		  red = {0,0},
-		  green = {0,0}
-		}
-	  },
 	  {
 		shadow =
 		{
