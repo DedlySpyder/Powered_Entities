@@ -1,0 +1,94 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.3.26
+Date: 02. 02. 2020
+  Changes:
+    - Support for 0.18
+---------------------------------------------------------------------------------------------------
+Version: 0.3.25
+Date: 27. 02. 2019
+  Changes:
+    - Support for 0.17
+---------------------------------------------------------------------------------------------------
+Version: 0.3.24
+Date: 12. 07. 2018
+  Changes:
+    - Added remote call so that other mods can directly add entities to support (thanks YPetremann)
+---------------------------------------------------------------------------------------------------
+Version: 0.3.23
+Date: 01. 07. 2018
+  Changes:
+    - Added mod compatibility for the following (thanks Splicer9): More Science, Mining+, and Assembly Line
+---------------------------------------------------------------------------------------------------
+Version: 0.3.22
+Date: 20. 05. 2018
+  Bugfixes:
+    - Fixes from Splicer9 for a few mod compatibility issues, introduced in 0.3.21
+---------------------------------------------------------------------------------------------------
+Version: 0.3.21
+Date: 13. 05. 2018
+  Changes:
+    - Added centrifuge to the base config
+    - Added mod compatibility for the following (thanks Splicer9): Pyanodons Industry, Reverse Factory, RITEG, SigmaOne's Nuclear
+    - Added mod compatibility for the following (thanks Splicer9): more entities with sizes that were not supported before for multiple mods (mainly for Pyanodons mods), Logistic Mine, Mini Machines
+---------------------------------------------------------------------------------------------------
+Version: 0.3.20
+Date: 22. 04. 2018
+  Changes:
+    - Added mod compatibility for the following (thanks Splicer9): Nauvis Day, DP77's Sulfur, Nanobots, Specialized Oil, Deep Mine, Macerator, Power on a Belt
+---------------------------------------------------------------------------------------------------
+Version: 0.3.19
+Date: 24. 03. 2018
+  Changes:
+    - Added mod compatibility for the following (thanks Splicer9): RealisticReactors, Air Filtering Advanced, Bio Industries, Dark Matter Replicators, Deadlock's Crating Machine, Electric Furnaces, Electric Train, Geothermal, KS Power, Large Lamp, Liquid Science, Mining Tools, Programming Logic Controller Unit, Bulk Rail Loader, Scanning Radar, Vehicle Radar, WaterWell, Wireless Signals, Stormwalls
+---------------------------------------------------------------------------------------------------
+Version: 0.3.18
+Date: 11. 02. 2018
+  Bugfixes:
+    - Fixed bug where the invisible power poles were deconstructed before the entity they were under
+---------------------------------------------------------------------------------------------------
+Version: 0.3.17
+Date: 16. 12. 2017
+  Changes:
+    - Support for 0.16
+---------------------------------------------------------------------------------------------------
+Version: 0.3.16
+Date: 03. 08. 2017
+  Changes:
+    - Mod compatibility for Double Furnace, Assembly Machine Zero and Flare Stack (thanks KroshkaRoo)
+    - Added hotkey to recalculate powered entities (F10 by default)
+    - Added global option to hide the recalculate button for all players
+---------------------------------------------------------------------------------------------------
+Version: 0.3.15
+Date: 29. 07. 2017
+  Changes:
+    - Picker Extended integration by AqlaSolutions
+---------------------------------------------------------------------------------------------------
+Version: 0.3.14
+Date: 11. 06. 2017
+  Bugfixes:
+    - Fixed bug with sometimes crashing due to "An area of zero size is not supported"
+---------------------------------------------------------------------------------------------------
+Version: 0.3.13
+Date: 02. 06. 2017
+  Changes:
+    - Migrated manual_mode and minimum_wire_reach to in-game settings
+---------------------------------------------------------------------------------------------------
+Version: 0.3.12
+Date: 01. 05. 2017
+  Changes:
+    - Support for 0.15
+---------------------------------------------------------------------------------------------------
+Version: 0.3.11
+Date: 01. 12. 2016
+  Bugfixes:
+    - Fixed rare occurrence of invisible poles dying and crashing the game
+---------------------------------------------------------------------------------------------------
+Version: 0.3.10
+Date: 26. 08. 2016
+  Changes:
+    - Support for 0.14
+---------------------------------------------------------------------------------------------------
+Version: 0.3.9
+Date: 27. 07. 2016
+  Bugfixes:
+    - Fixed crash when placing/deleting tile-ghosts
