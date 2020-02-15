@@ -16,6 +16,51 @@ function initializeGlobal()
 	global.poweredEntities["entities9x10"] = entities9x10
 	global.poweredEntities["entities10x10"] = entities10x10
 	global.poweredEntities["entities12x12"] = entities12x12
+	
+	global.scheduledTasks = global.scheduledTasks or {}
+	global.runningTasks = global.runningTasks or 0
+end
+
+function scheduleTask(name, func, args, delay)
+	if not delay then
+		delay = 300
+	end
+	
+	if global.runningTasks == 0 then
+		debugLog("Starting scheduler")
+		
+		scheduler = function(event)
+			completedActions = 0
+			for name, task in pairs(global.scheduledTasks) do
+				if task["startTime"] == game.tick then
+					debugLog("Running task " .. name)
+					
+					task["action"](task["args"])
+					task["done"] = true
+					completedActions = completedActions + 1
+				end
+			end
+			
+			if completedActions > 0 then
+				debugLog("Removing " .. completedActions .. " tasks from scheduler")
+				global.scheduledTasks = table.filter(global.scheduledTasks, function(v) return not v["done"] end)
+				global.runningTasks = global.runningTasks - completedActions
+			end
+			
+			if global.runningTasks == 0 then
+				debugLog("No more events found, removing scheduler")
+				script.on_event(defines.events.on_tick, nil)
+			end
+		end
+		
+		script.on_event(defines.events.on_tick, scheduler)
+	end
+	
+	if not global.scheduledTasks[name] then
+		debugLog("Adding task " .. name .. " for the first time")
+		global.runningTasks = global.runningTasks + 1
+	end
+	global.scheduledTasks[name] = {action=func, args=args, startTime=game.tick + delay}
 end
 
 --Build in manual mode
@@ -209,6 +254,24 @@ function destroyEntity(entity, entitiesToDestroy)
 end
 
 --Scripts to handle transistion between modes
+function placeAllPoles(techForce)
+	debugLog("Placing power poles in 5 sec")
+	placementTask = function()
+		if manual_mode then
+			placeAllPolesManual()
+		else
+			placeAllPolesAutomatic(techForce)
+		end
+	end
+	
+	name = "placeAllPoles-"
+	if techForce then
+		name = name .. techForce.name
+	else
+		name = name .. "global"
+	end
+	scheduleTask(name, placementTask)
+end
 
 --Places all poles for manual mode
 function placeAllPolesManual()

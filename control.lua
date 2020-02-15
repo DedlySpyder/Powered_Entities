@@ -4,6 +4,7 @@ require "mod-compadibility/mod-compadibility"
 require 'stdlib/area/area'
 require 'stdlib/surface'
 require 'stdlib/game'
+require 'stdlib/table'
 
 invisablePowerPoles = {	"invisable-electric-pole-1x1",
 						"invisable-electric-pole-2x2",
@@ -44,11 +45,8 @@ script.on_configuration_changed(function(data)
 						force.technologies["powered-entities"].researched = true
 					end
 				end
-				
-				placeAllPolesManual()
-			else
-				placeAllPolesAutomatic(nil)
 			end
+			placeAllPoles(nil)
 		end
 		if data.mod_changes["Powered_Entities"].old_version < "0.3.8" then
 			for _, force in pairs(game.forces) do
@@ -126,7 +124,8 @@ function researchCompleted(event)
 		drawRecalculateButtonAll()
 		
 		if not manual_mode then
-			placeAllPolesAutomatic(tech.force)
+			placeAllPoles(tech.force)
+			Game.print_all({"Powered-Entities-recalculate-warning"})
 		end
 	end
 end
@@ -142,25 +141,16 @@ end
 --Check when a player clicks a GUI button
 function on_button_click(event)
 	if (event.element.name == "poweredEntitiesRecalculateButton") then
+		Game.print_all({"Powered-Entities-recalculate-warning"})
 		initializeGlobal()
-		
-		if manual_mode then
-			placeAllPolesManual()
-		else
-			placeAllPolesAutomatic(nil)
-		end
+		placeAllPoles(nil)
 	end
 end
 
 --Check when a player presses the hotkey
 function on_hotkey_click(event)
 	initializeGlobal()
-	
-	if manual_mode then
-		placeAllPolesManual()
-	else
-		placeAllPolesAutomatic(nil)
-	end
+	placeAllPoles(nil)
 end
 
 --Check when a setting is changed
@@ -194,10 +184,10 @@ script.on_event("powered_entities_recalculate", on_hotkey_click)
 function debugLog(message)
 	if debug_mode then
 		for _, player in pairs(game.players) do
-			player.print(message)
+			player.print("[" .. game.tick .. "] " .. message)
 		end
 	end
-end 
+end
 
 --Remote Calls
 remote.add_interface("Powered_Entities", {
@@ -206,12 +196,7 @@ remote.add_interface("Powered_Entities", {
 	-- /c remote.call("Powered_Entities", "Recalculate_Powered_Entities")
 	Recalculate_Powered_Entities = function()
 		initializeGlobal()
-		
-		if manual_mode then
-			placeAllPolesManual()
-		else
-			placeAllPolesAutomatic(nil)
-		end
+		placeAllPoles(nil)
 	end,
 	-- Compatibility function, allow mods to add their entities by themselves to the list
 	-- /c remote.call("Powered_Entities", "add","steam-engine","3x3")
@@ -241,6 +226,9 @@ remote.add_interface("Powered_Entities", {
 		elseif (entity_type == "12x12") then
 			table.insert(entities12x12, entity_name)
 		end
+		
+		initializeGlobal()
+		placeAllPoles(nil)
 	end,
 	--Test function, gives all entities effected by mod and some power poles if needed
 	-- /c remote.call("Powered_Entities", "debug_testing")

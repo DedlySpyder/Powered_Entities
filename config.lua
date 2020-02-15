@@ -50,5 +50,5 @@ entities10x10 = {"rocket-silo"}
 
 entities12x12 = {}
 
---Debug
-debug_mode = false
+--Debug - ya a bit lazy on this
+debug_mode = settings.startup["Powered_Entities_debug_mode"].value

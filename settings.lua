@@ -16,5 +16,11 @@ data:extend({
 		type = "bool-setting",
 		setting_type = "runtime-global",
 		default_value = true
+	},
+	{
+		name = "Powered_Entities_debug_mode",
+		type = "bool-setting",
+		setting_type = "startup",
+		default_value = false
 	}
 })
