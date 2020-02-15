@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.28
+Date: 15. 02. 2020
+  Changes:
+    - Adding running of a recalculate after new entities are added through a remote call from other mods
+    - Delayed placement of invisible power poles by 5 seconds (and added a warning when triggered by the GUI button or technology research)
+    - Moved debug_mode config to ingame settings
+---------------------------------------------------------------------------------------------------
 Version: 0.3.27
 Date: 02. 02. 2020
   Changes:
