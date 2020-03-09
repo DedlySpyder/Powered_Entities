@@ -1,0 +1,36 @@
+{
+	"entity": [
+		["power-pad", "Powered_Entities_power_pad"],
+		["power-pad-pole", "Powered_Entities_invisible-electric-pole-1"],
+		["invisable-electric-pole-1x1", "Powered_Entities_invisible-electric-pole-1"],
+		["invisable-electric-pole-2x2", "Powered_Entities_invisible-electric-pole-2"],
+		["invisable-electric-pole-3x3", "Powered_Entities_invisible-electric-pole-3"],
+		["invisable-electric-pole-4x4", "Powered_Entities_invisible-electric-pole-4"],
+		["invisable-electric-pole-5x5", "Powered_Entities_invisible-electric-pole-5"],
+		["invisable-electric-pole-6x6", "Powered_Entities_invisible-electric-pole-6"],
+		["invisable-electric-pole-7x7", "Powered_Entities_invisible-electric-pole-7"],
+		["invisable-electric-pole-8x8", "Powered_Entities_invisible-electric-pole-8"],
+		["invisable-electric-pole-9x9", "Powered_Entities_invisible-electric-pole-9"],
+		["invisable-electric-pole-9x10", "Powered_Entities_invisible-electric-pole-10"],
+		["invisable-electric-pole-10x10", "Powered_Entities_invisible-electric-pole-10"],
+		["invisable-electric-pole-12x12", "Powered_Entities_invisible-electric-pole-12"]
+	],
+	"recipe": [
+		["power-pad", "Powered_Entities_power_pad"]
+	],
+	"item": [
+		["power-pad", "Powered_Entities_power_pad"]
+	],
+	"technology": [
+		["powered-entities", "Powered_Entities_main_tech"]
+	],
+	"mod-setting": [
+		["Powered_Entities_manual_mode", "Powered_Entities_00_manual_mode"],
+		["Powered_Entities_minimum_wire_reach", "Powered_Entities_01_minimum_wire_reach"],
+		["Powered_Entities_debug_mode", "Powered_Entities_90_debug_mode"],
+		["Powered_Entities_recalculate_show", "Powered_Entities_30_recalculate_show"]
+	],
+	"custom-input": [
+		["powered_entities_recalculate", "Powered_Entities_recalculate"]
+	]
+}

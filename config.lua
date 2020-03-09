@@ -1,4 +1,4 @@
---This will change between manual and automatic mode
+--[[--This will change between manual and automatic mode
 --true will force the player to make power pads to have entities be linked to the power grid
 --false will be the old way where the entities are linked to the power grid on their own
 manual_mode = settings.startup["Powered_Entities_manual_mode"].value
@@ -52,3 +52,4 @@ entities12x12 = {}
 
 --Debug - ya a bit lazy on this
 debug_mode = settings.startup["Powered_Entities_debug_mode"].value
+]]--

@@ -1,9 +1,8 @@
 data:extend({
-
-{
-	type = "custom-input",
-	name = "powered_entities_recalculate",
-	key_sequence = "F10",
-	consuming = "script-only"
-}
+	{
+		type = "custom-input",
+		name = "Powered_Entities_recalculate",
+		key_sequence = "F10",
+		consuming = "script-only"
+	}
 })
