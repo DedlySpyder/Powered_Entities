@@ -1,5 +1,6 @@
 require("actions")
 require("config")
+require("entity_lib")
 require("tasks")
 require("util")
 
@@ -12,8 +13,15 @@ This should cover any mod situation that the base mod will cover, with the exept
 Report = {}
 
 Report.FILE_NAME = "Powered_Entities_report.txt"
-Report.SURFACE_SIZE = 10
+Report.SURFACE_NAME = "Powered_Entities_report"
+Report.FORCE_NAME = "Powered_Entities_report"
 
+Report.ENTITIES_PER_ROW = 10
+
+Report.BUILD_CHECK_DELAY = 2
+Report.DESTROY_DELAY = 3
+Report.DESTROY_CHECK_DELAY = 6
+Report.REPORT_GENERATION_DELAY = 9
 
 function Report.cleanup()
 	global.reportEntities = nil
@@ -22,33 +30,33 @@ function Report.cleanup()
 	Actions.Automatic.techCheck = global.reportTechCheckBackup
 	global.reportTechCheckBackup = nil
 	
-	game.delete_surface("Powered_Entities_report")
-	game.merge_forces("Powered_Entities_report", "neutral")
+	game.delete_surface(Report.SURFACE_NAME)
+	game.merge_forces(Report.FORCE_NAME, "neutral")
 end
 
 function Report.buildReport()
 	if not global.reportInProgress then
 		Util.printAll({"Powered-Entities-report-generation-start"})
 		
-		local surface = game.create_surface("Powered_Entities_report", {width=Report.SURFACE_SIZE, height=Report.SURFACE_SIZE})
-		surface.request_to_generate_chunks({0,0}, 1)
-		surface.force_generate_chunk_requests()
+		local entities = Report.getEntities()
+		local largestSize, entityCount = Report.getLargestEntitySizeAndCount(entities)
+		local surface = Report.buildSurface(largestSize, entityCount)
 		
-		local force = game.create_force("Powered_Entities_report")
+		local force = game.create_force(Report.FORCE_NAME)
 		global.reportTechCheckBackup = Actions.Automatic.techCheck
 		Actions.Automatic.techCheck = Report.fakeTechCheck
 		
 		global.reportEntities = {}
 		global.reportInProgress = true
 		
-		Report.scheduleTasks(surface, force, Report.getEntities())
+		Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entities)
 	else
 		Util.debugLog("Skipping report, one is already running")
 	end
 end
 
 function Report.fakeTechCheck(force)
-	return force["name"] == "Powered_Entities_report" or global.reportTechCheckBackup(force)
+	return force["name"] == Report.FORCE_NAME or global.reportTechCheckBackup(force)
 end
 
 function Report.getEntities()
@@ -62,59 +70,71 @@ function Report.getEntities()
 	return Util.filterTable(game.entity_prototypes, fitlerFunc)
 end
 
-function Report.scheduleTasks(surface, force, entities)
-	Util.traceLog("Scheduling tasks for " .. table_size(entities) .. " entities")
-	
-	-- Clean up any remnants
-	for _, trash in pairs(surface.find_entities()) do
-		trash.destroy()
-	end
-	
-	local leftovers = {}
-	local placed = 0
-	for _, entityPrototype in pairs(entities) do
-		local entityName = entityPrototype["name"]
-		local position = surface.find_non_colliding_position(entityName, {0,0}, Report.SURFACE_SIZE, 0.5, true)
-		if position then
-			Util.traceLog("Found position for " .. entityName)
-			local otherEntities = surface.count_entities_filtered{area=Util.positionToBoundingBox(position, entityPrototype["selection_box"])}
-			if otherEntities == 0 then
-				local entity = surface.create_entity{name=entityName, position=position, force=force, raise_built=true}
-				
-				if entity and entity.valid then
-					global.reportEntities[entityName] = {prototype=entityPrototype, built=true, destroyed=false, checks={powered=false, poweredSize=nil, destroyedPoles=false, irregularity=false}}
-					
-					local args = {entity, entityName, surface, entity.selection_box}
-					Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-build-check", Report.Tasks.buildCheck, args, Actions.BASE_DELAY + 2)
-					Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy", Report.Tasks.destroy, args, Actions.BASE_DELAY + 3)
-					Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy-check", Report.Tasks.destroyCheck, args, Actions.BASE_DELAY + 6)
-					placed = placed + 1
-				else
-					Util.traceLog("Failed to place " .. entityName)
-					table.insert(leftovers, entityPrototype)
-				end
-			else
-				Util.traceLog("Found other entities when trying to place " .. entityName)
-				table.insert(leftovers, entityPrototype)
-			end
-		else
-			Util.traceLog("Could not find position for " .. entityName)
-			table.insert(leftovers, entityPrototype)
-		end
-	end
-	
-	if placed > 0 then
-		Util.traceLog("Scheduling new task for " .. #leftovers .. " leftovers")
-		Tasks.scheduleTask(game.tick .. "-report-schedule-tasks", Report.scheduleTasks, {surface, force, leftovers}, Actions.BASE_DELAY + 9)
-	else
-		Util.traceLog("Did not place any entities, remaining " .. #leftovers .. " are unbuilt")
-		for _, leftover in ipairs(leftovers) do
-			global.reportEntities[leftover["prototype"]["name"]] = {prototype=leftover}
+function Report.getLargestEntitySizeAndCount(entities)
+	local count = 0
+	local largestSize = 0
+	for _, entity in pairs(entities) do
+		local size = Entity_Lib.getEntitySize(entity)
+		if largestSize < size then
+			largestSize = size
 		end
 		
-		Report.generateReport()
-		Report.cleanup()
+		count = count + 1
 	end
+	
+	return largestSize, count
+end
+
+function Report.buildSurface(largestSize, count)
+	local singleEntitySize = largestSize * 2
+	local surfaceX = ((Report.ENTITIES_PER_ROW * singleEntitySize) + count) * 4
+	local surfaceY = ((math.ceil(count / Report.ENTITIES_PER_ROW) * singleEntitySize) + count) * 4
+	
+	Util.traceLog("Building " .. surfaceX .. "x" .. surfaceY .. " surface for reporting " .. count .. " entities of size " .. largestSize)
+	local surface = game.create_surface(Report.SURFACE_NAME, {width = surfaceX, height = surfaceY, water = 0, default_enable_all_autoplace_controls = false})
+	surface.request_to_generate_chunks({0,0}, math.max(surfaceX, surfaceY)/32 * 4) -- Only using positve numbers, so need x4 size
+	surface.force_generate_chunk_requests()
+	
+	-- Clear junk, mainly cliffs
+	for _, entity in pairs(surface.find_entities()) do
+		entity.destroy()
+	end
+	
+	return surface
+end
+
+function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entities)
+	Util.traceLog("Creating entities and scheduling tasks")
+	
+	local entityBoxSize = largestSize * 2
+	local halfway = math.floor(entityBoxSize / 2)
+	local count = 0
+	for _, entityPrototype in pairs(entities) do
+		local row = math.floor(count / Report.ENTITIES_PER_ROW)
+		local column = count % Report.ENTITIES_PER_ROW
+		
+		local entityName = entityPrototype["name"]
+		local position = {(column * entityBoxSize) + halfway, (row * entityBoxSize) + halfway}
+		Util.traceLog("Placing " .. entityName .. " at row " .. row .. " column " .. column .. " - " .. serpent.line(position))
+		
+		local entity = surface.create_entity{name = entityName, position = position, force = force, raise_built = true}
+		if entity and entity.valid then
+			Util.traceLog("Building " .. entityName)
+			global.reportEntities[entityName] = {prototype=entityPrototype, built=true, destroyed=false, checks={powered=false, poweredSize=nil, destroyedPoles=false, irregularity=false}}
+			
+			local args = {entity, entityName, surface, entity.selection_box}
+			Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-build-check", Report.Tasks.buildCheck, args, Actions.BASE_DELAY + Report.BUILD_CHECK_DELAY)
+			Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy", Report.Tasks.destroy, args, Actions.BASE_DELAY + Report.DESTROY_DELAY)
+			Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy-check", Report.Tasks.destroyCheck, args, Actions.BASE_DELAY + Report.DESTROY_CHECK_DELAY)
+		else
+			Util.traceLog("Failed to place " .. entityName)
+			global.reportEntities[entityName] = {prototype=entityPrototype, built=false, destroyed=false}
+		end
+		
+		count = count + 1
+	end
+	
+	Tasks.scheduleTask("report-generation", Report.generateReport, {}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
 end
 
 function Report.generateReport()
@@ -138,6 +158,7 @@ function Report.generateReport()
 	end
 	
 	Util.printAll({"Powered-Entities-report-generation-end", Report.FILE_NAME})
+	Report.cleanup()
 end
 
 function Report.sortReportData(reportEntities)
@@ -223,8 +244,15 @@ function Report.Tasks.buildCheck(entity, entityName, surface, area)
 		Report.Tasks.reportIrregularity("Original " .. entityName .. " destroyed when being built, still checking for power poles", entityName)
 	end
 	
-	local entities = surface.find_entities_filtered{area=area, type="electric-pole"}
-	local powerPoles = Actions.findPowerPoles(entities)
+	local entities = surface.find_entities_filtered{area=area}
+	for _, foundEntity in pairs(entities) do
+		local foundEntityName = foundEntity["name"]
+		if foundEntityName ~= entityName and not string.find(foundEntityName, Config.INVISIBLE_POLE_BASE_NAME_ESCAPED) then
+			Report.Tasks.reportIrregularity("Found other entity " .. foundEntityName, entityName)
+		end
+	end
+	
+	local powerPoles = Actions.Filters.findPowerPoles(entities)
 	local count = #powerPoles
 	if count > 0 then
 		Util.traceLog("Found power poles for " .. entityName)
@@ -251,7 +279,7 @@ function Report.Tasks.destroyCheck(entity, entityName, surface, area)
 	end
 	
 	local entities = surface.find_entities_filtered{area=area, type="electric-pole"}
-	local count = #Actions.findPowerPoles(entities)
+	local count = #Actions.Filters.findPowerPoles(entities)
 	if count == 0 then
 		Util.traceLog("Found no power poles for " .. entityName)
 		global.reportEntities[entityName]["checks"]["destroyedPoles"] = true

@@ -92,6 +92,7 @@ function Util.isEqualPositions(pos1, pos2, skipStandardize)
 end
 
 -- Resizing
+-- NOTE: Rounds up (or down if negative) all resulting values
 function Util.positionToBoundingBox(position, selectionBox, skipStandardize)
 	if not skipStandardize then
 		position = Util.standardizePosition(position)
@@ -99,9 +100,17 @@ function Util.positionToBoundingBox(position, selectionBox, skipStandardize)
 	end
 	
 	if position and selectionBox then
-		for _, subPosititon in pairs(selectionBox) do
-			subPosititon.x = subPosititon.x + position.x
-			subPosititon.y = subPosititon.y + position.y
+		for _, boxPart in pairs(selectionBox) do
+			for key, subPosititon in pairs(boxPart) do
+				boxPart[key] = subPosititon + position[key]
+				
+				local value = boxPart[key]
+				if value < 0 then
+					boxPart[key] = math.floor(value)
+				else
+					boxPart[key] = math.ceil(value)
+				end
+			end
 		end
 	end
 	
