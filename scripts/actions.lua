@@ -53,7 +53,7 @@ function Actions.regeneratePowerPoles(forForce)
 		Util.printAll({"Powered-Entities-recalculate-warning", iteration, math.floor(iteration/60), math.ceil(iteration/30)})
 		global.isRegenerating = true
 	else
-		Util.debugLog("Not regenerating power poles, one is already running")
+		Util.printAll({"Powered-Entities-recalculate-already-running"})
 	end
 end
 
@@ -226,18 +226,18 @@ end
 
 
 -- Register actions based on manual/automatic mode
-local actionWrapper = function(funcName, innerFunc)
-	local basicTask = function(entity, entityName, surface, force, area)
+local actionWrapper = function(funcName, actionFunc)
+	local basicTask = function(taskFunc, entity, entityName, surface, force, area)
 		if not (entity and entity.valid) then
 			Util.traceLog("WARN: Triggering entity is no longer valid")
 		end
-		innerFunc(entityName, surface, force, area)
+		taskFunc(entityName, surface, force, area)
 	end
 	
 	local action = function(entity)
 		if entity and entity.valid and entity.name then
 			Util.traceLog(funcName .. " called with entity " .. entity.name)
-			Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity), basicTask, {entity, entity.name, entity.surface, entity.force, entity.selection_box}, Actions.BASE_DELAY)
+			Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity), basicTask, {actionFunc, entity, entity.name, entity.surface, entity.force, entity.selection_box}, Actions.BASE_DELAY)
 		else
 			Util.traceLog(funcName .. " called with invalid entity or variable")
 		end

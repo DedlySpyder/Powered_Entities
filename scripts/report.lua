@@ -17,6 +17,7 @@ Report.SURFACE_NAME = "Powered_Entities_report"
 Report.FORCE_NAME = "Powered_Entities_report"
 
 Report.ENTITIES_PER_ROW = 10
+Report.MAX_ROWS = 10
 
 Report.BUILD_CHECK_DELAY = 2
 Report.DESTROY_DELAY = 3
@@ -87,8 +88,10 @@ end
 
 function Report.buildSurface(largestSize, count)
 	local singleEntitySize = largestSize * 2
+	-- Number of columns is static
 	local surfaceX = ((Report.ENTITIES_PER_ROW * singleEntitySize) + count) * 4
-	local surfaceY = ((math.ceil(count / Report.ENTITIES_PER_ROW) * singleEntitySize) + count) * 4
+	-- Number of rows could be less than the max
+	local surfaceY = ((math.min(Report.MAX_ROWS, math.ceil(count / Report.ENTITIES_PER_ROW)) * singleEntitySize) + count) * 4
 	
 	Util.traceLog("Building " .. surfaceX .. "x" .. surfaceY .. " surface for reporting " .. count .. " entities of size " .. largestSize)
 	local surface = game.create_surface(Report.SURFACE_NAME, {width = surfaceX, height = surfaceY, water = 0, default_enable_all_autoplace_controls = false})
@@ -109,32 +112,50 @@ function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entit
 	local entityBoxSize = largestSize * 2
 	local halfway = math.floor(entityBoxSize / 2)
 	local count = 0
+	local leftovers = {}
 	for _, entityPrototype in pairs(entities) do
 		local row = math.floor(count / Report.ENTITIES_PER_ROW)
 		local column = count % Report.ENTITIES_PER_ROW
-		
 		local entityName = entityPrototype["name"]
-		local position = {(column * entityBoxSize) + halfway, (row * entityBoxSize) + halfway}
-		Util.traceLog("Placing " .. entityName .. " at row " .. row .. " column " .. column .. " - " .. serpent.line(position))
 		
-		local entity = surface.create_entity{name = entityName, position = position, force = force, raise_built = true}
-		if entity and entity.valid then
-			Util.traceLog("Building " .. entityName)
-			global.reportEntities[entityName] = {prototype=entityPrototype, built=true, destroyed=false, checks={powered=false, poweredSize=nil, destroyedPoles=false, irregularity=false}}
+		if row <= Report.MAX_ROWS then
+			local position = {(column * entityBoxSize) + halfway, (row * entityBoxSize) + halfway}
+			Util.traceLog("Placing " .. entityName .. " at row " .. row .. " column " .. column .. " - " .. serpent.line(position))
 			
-			local args = {entity, entityName, surface, entity.selection_box}
-			Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-build-check", Report.Tasks.buildCheck, args, Actions.BASE_DELAY + Report.BUILD_CHECK_DELAY)
-			Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy", Report.Tasks.destroy, args, Actions.BASE_DELAY + Report.DESTROY_DELAY)
-			Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy-check", Report.Tasks.destroyCheck, args, Actions.BASE_DELAY + Report.DESTROY_CHECK_DELAY)
+			local entity = surface.create_entity{name = entityName, position = position, force = force, raise_built = true}
+			if entity and entity.valid then
+				Util.traceLog("Building " .. entityName)
+				global.reportEntities[entityName] = {prototype=entityPrototype, built=true, destroyed=false, checks={powered=false, poweredSize=nil, destroyedPoles=false, irregularity=false}}
+				
+				local args = {entity, entityName, surface, entity.selection_box}
+				Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-build-check", Report.Tasks.buildCheck, args, Actions.BASE_DELAY + Report.BUILD_CHECK_DELAY)
+				Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy", Report.Tasks.destroy, args, Actions.BASE_DELAY + Report.DESTROY_DELAY)
+				Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy-check", Report.Tasks.destroyCheck, args, Actions.BASE_DELAY + Report.DESTROY_CHECK_DELAY)
+			else
+				Util.traceLog("Failed to place " .. entityName .. " trying it in a later iteration")
+				table.insert(leftovers, entityPrototype)
+			end
+			
+			count = count + 1
 		else
-			Util.traceLog("Failed to place " .. entityName)
-			global.reportEntities[entityName] = {prototype=entityPrototype, built=false, destroyed=false}
+			Util.traceLog("Max rows hit, delaying " .. entityName .. " to a later iteration")
+			table.insert(leftovers, entityPrototype)
 		end
-		
-		count = count + 1
 	end
 	
-	Tasks.scheduleTask("report-generation", Report.generateReport, {}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
+	if #leftovers > 0 and count > 0 then
+		Util.traceLog("Scheduling next iteration for " .. #leftovers .. " leftover entities")
+		Tasks.scheduleTask(game.tick .. "-report-schedule-tasks", Report.buildEntitiesAndScheduleTasks, {largestSize, surface, force, leftovers}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
+	else
+		Util.traceLog("Either placed all entities or failed to place some altogether")
+		for _, leftover in ipairs(leftovers) do
+			local entityName = leftover["name"]
+			Util.traceLog("Found unbuilt leftover: " .. entityName)
+			global.reportEntities[entityName] = {prototype=leftover, built=false, destroyed=false}
+		end
+		
+		Tasks.scheduleTask(game.tick .. "-report-generation", Report.generateReport, {}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
+	end
 end
 
 function Report.generateReport()
@@ -188,12 +209,14 @@ function Report.sortReportData(reportEntities)
 	-- Sort the array by size
 	local sortFunc = function(a,b)
 		local aSize = a["size"]
+		local aNum = tonumber(aSize)
 		local bSize = b["size"]
-		if tonumber(aSize) and tonumber(bSize) then
-			return aSize < bSize
-		elseif tonumber(aSize) then
+		local bNum = tonumber(bSize)
+		if aNum and bNum then
+			return aNum < bNum
+		elseif aNum then
 			return true
-		elseif tonumber(bSize) then
+		elseif bNum then
 			return false
 		elseif aSize == "unpowered" then
 			return true
