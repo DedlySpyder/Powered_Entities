@@ -99,7 +99,9 @@ end)
 
 function on_entity_built(event)
 	local entity = event.created_entity or event.entity or entity.destination
-	Actions.onBuild(entity)
+	if entity and entity.valid and not Entity_Lib.isBlacklistedType(entity) then
+		Actions.onBuild(entity)
+	end
 end
 
 script.on_event(defines.events.on_robot_built_entity, on_entity_built)

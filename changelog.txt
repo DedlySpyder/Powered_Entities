@@ -1,6 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.4.1
+Date: 13. 03. 2020
+  Bugfixes:
+    - Fixed massive lag spike when placing blueprints
+---------------------------------------------------------------------------------------------------
 Version: 0.4.0
-Date: 11. 03. 2020
+Date: 12. 03. 2020
   Major Features:
     - Major mod rewrite! This mod has been rewritten from a static list of compatible mods to being dynamically generated for entities. So try it with all your favorite mods!
     - The rewrite may mean that some entities that were powered before are no longer powered (and vice versa), I have verified the base game, bob's mods, and py mods should be the same

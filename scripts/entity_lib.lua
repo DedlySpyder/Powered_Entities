@@ -4,7 +4,7 @@ require("util")
 Entity_Lib = {}
 
 function Entity_Lib.init()
-	Entity_Lib.BLACKLISTED_TYPE = { "construction-robot", "logistic-robot" }
+	Entity_Lib.BLACKLISTED_TYPE = { "construction-robot", "entity-ghost", "logistic-robot", "tile-ghost" }
 	Entity_Lib.WHITELISTED_USAGE_PRIORITIES = { "primary-input", "secondary-input", "lamp" }
 	
 	if not Config.ENABLE_INSERTER then
