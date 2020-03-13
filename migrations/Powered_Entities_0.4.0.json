@@ -28,7 +28,7 @@
 		["Powered_Entities_manual_mode", "Powered_Entities_00_manual_mode"],
 		["Powered_Entities_minimum_wire_reach", "Powered_Entities_01_minimum_wire_reach"],
 		["Powered_Entities_debug_mode", "Powered_Entities_90_debug_mode"],
-		["Powered_Entities_recalculate_show", "Powered_Entities_30_recalculate_show"]
+		["Powered_Entities_recalculate_show", "Powered_Entities_80_recalculate_show"]
 	],
 	"custom-input": [
 		["powered_entities_recalculate", "Powered_Entities_recalculate"]

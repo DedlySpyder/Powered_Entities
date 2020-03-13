@@ -145,7 +145,7 @@ function Actions.checkAreaForEntityToPower(surface, force, area)
 		end
 		
 		local foundPowerPad = Actions.Filters.containsPowerPad(entities)
-		local foundElectricConsumer = Actions.Filters.containsElectricConsumer(entities)
+		local foundElectricConsumer = Actions.Filters.containsElectricEntity(entities)
 		local foundPowerPoles = Actions.Filters.findPowerPoles(entities)
 		
 		-- We're on the largest entity and found atleast on electric consumer in the pile and a power pad
@@ -203,10 +203,10 @@ function Actions.Filters.findPowerPoles(entities)
 	return powerPoles
 end
 
-function Actions.Filters.containsElectricConsumer(entities)
+function Actions.Filters.containsElectricEntity(entities)
 	for _, entity in pairs(entities) do
 		if not string.find(entity.name, Config.INVISIBLE_POLE_BASE_NAME_ESCAPED) then
-			if Entity_Lib.isElectricConsumer(entity.prototype) then
+			if Entity_Lib.isElectricEntity(entity.prototype) then
 				return true
 			end
 		end

@@ -5,29 +5,6 @@ require("scripts/report")
 require("scripts/tasks")
 require("scripts/util")
 
---[[ Change Log stuff
-Changelog
-- Dynamic calculation of powered entities (should be compatible with all mods out of the box, let me know if it doesn't with one and I'll take a look)
-	- The supply range of entities are calculated based off the longest side, so rectangular entities will cause weird looking power coverage. This is a Factorio thing (supply area is just a radius)
-	- This also means that the maximum wire distance needed reworked, entities that are 3x3 or smaller are not effected, so just make sure anything bigger than that still works after the update (roboport and oil refinery are the only vanilla entities that were impacted)
-		- Higher number of 5 or 1.5 * the longest side of the entity
-	- rocket silo was resized for 9x9 entity
-	- vanilla adds programmable-speaker, combinators, and crash site versions of entities
-	- tell about report
-		- warn about huge lag with heavily modded games (~20 secs for bob mods)
-
-- new settings explanation (inserter, solar, accumulators) (+ others)
-- no longer need remote calls from other mods (they are no-op now)
-- mod settings didn't carry over (for the most part, recalc button in map should)
-]]--
-
---TODO
---		- remove all old code (after verifying mod compatibility)
--- 		- verify that everything still works
---[[
-test adding new mod and removing a mod
-current mod compatibility doesn't totally break	- just check a report of each of them to see if it is the same
-]]--
 
 script.on_configuration_changed(function(data)
 	if data.mod_changes and data.mod_changes["Powered_Entities"] and data.mod_changes["Powered_Entities"].old_version then
@@ -49,7 +26,7 @@ script.on_configuration_changed(function(data)
 			-- Tasks was reworked, so any old tasks will break (it was only being used on a regenerate before anyways)
 			global.scheduledTasks = nil
 			global.runningTasks = nil
-			global.wasInManualMode = Config.MANUAL_MODE
+			global.wasInManualMode = not Config.MANUAL_MODE -- Force a recipe check
 			
 			for _, player in pairs(game.players) do
 				if player.gui.top.poweredEntitiesRecalculateButton and player.gui.top.poweredEntitiesRecalculateButton.valid then

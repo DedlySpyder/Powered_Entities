@@ -8,7 +8,7 @@ GUI = {}
 -- Recalculate button
 function GUI.drawRecalculateButton(player)
 	if player and player.connected then
-		Util.debugLog("Drawing button for " .. player.name)
+		Util.debugLog("Drawing recalculate button for " .. player.name)
 		local buttonFlow = mod_gui.get_button_flow(player)
 		if not (buttonFlow.poweredEntitiesRecalculateButton and buttonFlow.poweredEntitiesRecalculateButton.valid) then
 			if Config.SHOW_RECALCULATE then
@@ -35,7 +35,7 @@ end
 
 function GUI.destroyRecalculateButton(player)
 	if player and player.connected then
-		Util.debugLog("Destroying button for " .. player.name)
+		Util.debugLog("Destroying recalculate button for " .. player.name)
 		local buttonFlow = mod_gui.get_button_flow(player)
 		if buttonFlow.poweredEntitiesRecalculateButton and buttonFlow.poweredEntitiesRecalculateButton.valid then
 			buttonFlow.poweredEntitiesRecalculateButton.destroy()
@@ -61,6 +61,7 @@ end
 
 function GUI.drawReportButtonAll()
 	for _, player in pairs(game.players) do
+		Util.debugLog("Drawing report button for " .. player.name)
 		local buttonFlow = mod_gui.get_button_flow(player)
 		if not (buttonFlow.poweredEntitiesReportButton and buttonFlow.poweredEntitiesReportButton.valid) then
 			buttonFlow.add{type="button", name="poweredEntitiesReportButton", caption={"Powered-Entities-report-generation-button"}}
@@ -70,6 +71,7 @@ end
 
 function GUI.destroyReportButtonAll()
 	for _, player in pairs(game.players) do
+		Util.debugLog("Destroying report button for " .. player.name)
 		local buttonFlow = mod_gui.get_button_flow(player)
 		if buttonFlow.poweredEntitiesReportButton and buttonFlow.poweredEntitiesReportButton.valid then
 			buttonFlow.poweredEntitiesReportButton.destroy()

@@ -40,25 +40,31 @@ data:extend({
 		default_value = false
 	},
 	{
-		name = "Powered_Entities_01_enable_solar",
+		name = "Powered_Entities_05_enable_solar",
 		type = "bool-setting",
 		setting_type = "runtime-global",
 		default_value = true
 	},
 	{
-		name = "Powered_Entities_02_enable_accumulator",
+		name = "Powered_Entities_10_enable_accumulator",
 		type = "bool-setting",
 		setting_type = "runtime-global",
 		default_value = true
 	},
 	{
-		name = "Powered_Entities_30_recalculate_show",
+		name = "Powered_Entities_15_enable_producers",
+		type = "bool-setting",
+		setting_type = "runtime-global",
+		default_value = false
+	},
+	{
+		name = "Powered_Entities_80_recalculate_show",
 		type = "bool-setting",
 		setting_type = "runtime-global",
 		default_value = true
 	},
 	{
-		name = "Powered_Entities_40_recalculate_batch_size",
+		name = "Powered_Entities_90_recalculate_batch_size",
 		type = "int-setting",
 		setting_type = "runtime-global",
 		default_value = 5

@@ -31,6 +31,9 @@ function Report.cleanup()
 	Actions.Automatic.techCheck = global.reportTechCheckBackup
 	global.reportTechCheckBackup = nil
 	
+	Actions.Filters.containsPowerPad = global.reportPowerPadFilter
+	global.reportPowerPadFilter = nil
+	
 	game.delete_surface(Report.SURFACE_NAME)
 	game.merge_forces(Report.FORCE_NAME, "neutral")
 end
@@ -47,6 +50,9 @@ function Report.buildReport()
 		global.reportTechCheckBackup = Actions.Automatic.techCheck
 		Actions.Automatic.techCheck = Report.fakeTechCheck
 		
+		global.reportPowerPadFilter = Actions.Filters.containsPowerPad
+		Actions.Filters.containsPowerPad = Report.fakePowerPadFilter
+		
 		global.reportEntities = {}
 		global.reportInProgress = true
 		
@@ -58,6 +64,13 @@ end
 
 function Report.fakeTechCheck(force)
 	return force["name"] == Report.FORCE_NAME or global.reportTechCheckBackup(force)
+end
+
+function Report.fakePowerPadFilter(entities)
+	for _, entity in pairs(entities) do
+		if entity["force"]["name"] == Report.FORCE_NAME then return true end
+	end
+	return global.reportPowerPadFilter(entities)
 end
 
 function Report.getEntities()
@@ -131,12 +144,11 @@ function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entit
 				Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-build-check", Report.Tasks.buildCheck, args, Actions.BASE_DELAY + Report.BUILD_CHECK_DELAY)
 				Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy", Report.Tasks.destroy, args, Actions.BASE_DELAY + Report.DESTROY_DELAY)
 				Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy-check", Report.Tasks.destroyCheck, args, Actions.BASE_DELAY + Report.DESTROY_CHECK_DELAY)
+				count = count + 1
 			else
 				Util.traceLog("Failed to place " .. entityName .. " trying it in a later iteration")
 				table.insert(leftovers, entityPrototype)
 			end
-			
-			count = count + 1
 		else
 			Util.traceLog("Max rows hit, delaying " .. entityName .. " to a later iteration")
 			table.insert(leftovers, entityPrototype)

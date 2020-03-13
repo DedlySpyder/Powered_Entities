@@ -1,4 +1,27 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.4.0
+Date: 11. 03. 2020
+  Major Features:
+    - Major mod rewrite! This mod has been rewritten from a static list of compatible mods to being dynamically generated for entities. So try it with all your favorite mods!
+    - The rewrite may mean that some entities that were powered before are no longer powered (and vice versa), I have verified the base game, bob's mods, and py mods should be the same
+    - The supply range of entities are calculated based off the longest side, so rectangular entities will cause weird looking power coverage. This is a Factorio thing (supply area is just a radius)
+    - This also adds programmable-speaker, combinators, and crash site entities to be wired
+    - To figure out what entities are supported by the rework run the `/c remote.call("Powered_Entities", "build_report")` command (see mod portal for more details)
+  Changes:
+    - Maximum wire distance of powered entities was changed as a part of the dynamic rework, new calculation is the minimum of 5 or 1.5 * longest side of the entity
+    - Entities of size 3x3 or smaller are not effected by this, but anything bigger might be (this is just roboports, oil refineries, and rocket-silos in the base game)
+  Features:
+    - New settings to enable/disable solar panels, accumulators, inserters, and power producers for wiring (each has their own setting, and they default to what was in use before)
+    - Settings were renamed on the back end, and so startup settings don't appear to carry over correctly, so make SURE that manual/auto is correctly set!
+    - Entity recalculation is now load balanced over several seconds instead of all in one go, the mod will default to looking at 5 chunks/tick (editable through the new Recalculate Batch Size setting)
+  Bugfixes:
+    - Rocket silo now has the correct supply area radius
+    - A few entities were renamed and were missing from the mod, so they should now work
+  Modding:
+    - The old remote calls are no longer used, they are still created, so as to not break other mods, but they no longer do anything
+  Other:
+    - Let me know if you find a mod that has issues with the rewrite
+---------------------------------------------------------------------------------------------------
 Version: 0.3.28
 Date: 15. 02. 2020
   Changes:

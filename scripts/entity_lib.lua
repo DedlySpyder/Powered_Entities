@@ -19,6 +19,11 @@ function Entity_Lib.init()
 		table.insert(Entity_Lib.WHITELISTED_USAGE_PRIORITIES, "tertiary")
 		table.insert(Entity_Lib.WHITELISTED_USAGE_PRIORITIES, "managed-accumulator")
 	end
+	
+	if Config.ENABLE_PRODUCER then
+		table.insert(Entity_Lib.WHITELISTED_USAGE_PRIORITIES, "primary-output")
+		table.insert(Entity_Lib.WHITELISTED_USAGE_PRIORITIES, "secondary-output")
+	end
 end
 
 Entity_Lib.init()
@@ -33,7 +38,7 @@ function Entity_Lib.isBlacklistedType(entity)
 	return false
 end
 
-function Entity_Lib.isElectricConsumer(entityPrototype)
+function Entity_Lib.isElectricEntity(entityPrototype)
 	local usagePriority = Entity_Lib.getElectricEnergyUsagePriority(entityPrototype)
 	
 	if usagePriority then
