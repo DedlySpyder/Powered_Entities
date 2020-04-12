@@ -102,9 +102,9 @@ end
 function Report.buildSurface(largestSize, count)
 	local singleEntitySize = largestSize * 2
 	-- Number of columns is static
-	local surfaceX = ((Report.ENTITIES_PER_ROW * singleEntitySize) + count) * 4
+	local surfaceX = ((Report.ENTITIES_PER_ROW * singleEntitySize) + Report.ENTITIES_PER_ROW) * 4
 	-- Number of rows could be less than the max
-	local surfaceY = ((math.min(Report.MAX_ROWS, math.ceil(count / Report.ENTITIES_PER_ROW)) * singleEntitySize) + count) * 4
+	local surfaceY = ((math.min(Report.MAX_ROWS, math.ceil(count / Report.ENTITIES_PER_ROW)) * singleEntitySize) + Report.MAX_ROWS) * 4
 	
 	Util.traceLog("Building " .. surfaceX .. "x" .. surfaceY .. " surface for reporting " .. count .. " entities of size " .. largestSize)
 	local surface = game.create_surface(Report.SURFACE_NAME, {width = surfaceX, height = surfaceY, water = 0, default_enable_all_autoplace_controls = false})
