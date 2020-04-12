@@ -6,6 +6,6 @@
   "contact": "DedlySpyder@gmail.com",
   "homepage": "",
   "description": "This mod will create power lines between most of the game's entities that require power.",
-  "dependencies": ["base >= 0.18.0"],
-  "factorio_version": "0.18"
+  "dependencies": ["base >= 0.17.0"],
+  "factorio_version": "0.17"
 }
