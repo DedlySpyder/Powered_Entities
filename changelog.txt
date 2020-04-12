@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.4.4
+Date: 12. 04. 2020
+  Bugfixes:
+    - Fixed bad calculation of report surface size, causing a game crash on heavily modded games
+---------------------------------------------------------------------------------------------------
 Version: 0.4.3
 Date: 12. 04. 2020
   Other:
