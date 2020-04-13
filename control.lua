@@ -98,7 +98,7 @@ end)
 
 
 function on_entity_built(event)
-	local entity = event.created_entity or event.entity or entity.destination
+	local entity = event.created_entity or event.entity or event.destination
 	if entity and entity.valid and not Entity_Lib.isBlacklistedType(entity) then
 		Actions.onBuild(entity)
 	end
