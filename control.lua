@@ -158,7 +158,15 @@ function on_button_click(event)
 end
 
 script.on_event(defines.events.on_gui_click, on_button_click)
-script.on_event("Powered_Entities_recalculate", Actions.regeneratePowerPoles)
+
+function on_hotkey_press(event)
+	local player = game.players[event.player_index]
+	if player and player.valid and player.force and player.force.valid then
+		Actions.regeneratePowerPoles(player.force)
+	end
+end
+
+script.on_event("Powered_Entities_recalculate", on_hotkey_press)
 
 function on_setting_changed(event)
 	local setting = event.setting

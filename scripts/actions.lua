@@ -62,7 +62,7 @@ function Actions.regeneratePowerPolesTask(surface, chunk, forForce)
 	Actions.destroyInvisiblePowerPolesInArea(surface, forForce, chunk.area)
 	
 	local entities
-	if forForce then
+	if forForce and forForce.valid then
 		entities = surface.find_entities_filtered{area=chunk.area, force=forForce}
 	else
 		entities = surface.find_entities_filtered{area=chunk.area, type=Config.BLACKLISTED_ENTITY_TYPES, invert=true}
@@ -74,6 +74,10 @@ function Actions.regeneratePowerPolesTask(surface, chunk, forForce)
 end
 
 function Actions.destroyInvisiblePowerPolesInArea(surface, force, area)
+	if force and not force.valid then
+		force = nil
+	end
+	
 	local entities = surface.find_entities_filtered{area=area, force=force, type="electric-pole"}
 	
 	for _, powerPole in ipairs(entities) do
