@@ -53,10 +53,12 @@ for size, _ in pairs(entitySizes) do
 	
 	pole["name"] = Config.INVISIBLE_POLE_BASE_NAME .. size
 	pole["supply_area_distance"] = (size / 2) + 1
+	
+	-- The max maximum_wire_distance is 64, per Factorio
 	if Config.MINIMUM_WIRE_REACH then
-		pole["maximum_wire_distance"] = math.max(1, size)
+		pole["maximum_wire_distance"] = math.min(64, math.max(1, size))
 	else
-		pole["maximum_wire_distance"] = math.max(5, math.floor(size * 1.5))
+		pole["maximum_wire_distance"] = math.min(64, math.max(5, math.floor(size * 1.5)))
 	end
 	
 	Util.debugLog("Creating invisible power pole size " .. size .. ":")
