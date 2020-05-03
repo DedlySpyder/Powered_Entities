@@ -59,16 +59,26 @@ script.on_configuration_changed(function(data)
 		GUI.toggleReportButtonAll()
 	end
 	
-	-- When another mod is added/removed/upgraded, run a regenerate
-	if data.mod_changes then
-		-- This is just an empty table most of the time, not nil like I expected
-		local modSize = table_size(data.mod_changes)
-		if modSize ~= 0 and (modSize > 2 or not data.mod_changes["Powered_Entities"]) then
+	-- When another mod is migrated/removed/upgraded, regenerate entities
+	if data.migration_applied or (data.mod_changes and checkModChanges(data.mod_changes)) then
 		Util.debugLog("Other mod activity, running regenerate")
 		Actions.regeneratePowerPoles()
-		end
 	end
 end)
+
+function checkModChanges(modChanges)
+	for mod, data in pairs(modChanges) do
+		if mod ~= "Powered_Entities" then
+			if not data.new_version then
+				-- Mod removed
+				return true
+			elseif data.old_version and data.old_version < data.new_version then
+				-- Mod upgraded
+				return true
+			end
+		end
+	end
+end
 
 function register_remote_events(data)
 	if remote.interfaces["picker"] and remote.interfaces["picker"]["dolly_moved_entity_id"] then
