@@ -36,6 +36,16 @@ function Util.printAll(message)
 	end
 end
 
+function Util.isTechnologyResearched()
+	for _, force in pairs(game.forces) do
+		if force.technologies[Config.TECHNOLOGY_NAME].researched then
+			return true
+		end
+	end
+	
+	return false
+end
+
 -- Filter either a table or an array, if the function returns true then the value will stay
 function Util.filterTable(tbl, func)
 	local newTable = {}
