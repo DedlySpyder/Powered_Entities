@@ -18,6 +18,7 @@ if settings.global then
 		Config.ENABLE_PRODUCER = settings.global["Powered_Entities_15_enable_producers"].value
 		Config.SHOW_RECALCULATE = settings.global[Config.SHOW_RECALCULATE_NAME].value
 		Config.RECALCULATE_BATCH_SIZE = settings.global["Powered_Entities_90_recalculate_batch_size"].value
+		Config.SKIP_RECALCULATE_ON_MOD_CHANGES = settings.global["Powered_Entities_skip_recalculate_on_mod_changes"].value
 	end
 	
 	Config.refresh()

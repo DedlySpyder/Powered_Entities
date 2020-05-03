@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.4.14
+Date: 03. 05. 2020
+  Features:
+    - New settings to disable the recalculate entities on mod changes (defaults to false, which means the recalculate will still trigger). NOTE: Skipping the recalculate could leave invisible power poles on the map, so only skip this if you are willing to take that risk, or are fine with manually triggering a recalculate
+  Changes:
+    - Recalculate entities is no longer triggered on mod changes if the Powered Entities technology is not researched
+---------------------------------------------------------------------------------------------------
+Version: 0.4.13
+Date: 03. 05. 2020
+  Other:
+    - Factorio 0.18 version bump due to 0.4.12
+---------------------------------------------------------------------------------------------------
 Version: 0.4.12
 Date: 03. 05. 2020
   Changes:
