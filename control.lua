@@ -60,9 +60,17 @@ script.on_configuration_changed(function(data)
 	end
 	
 	-- When another mod is migrated/removed/upgraded, regenerate entities
-	if data.migration_applied or (data.mod_changes and checkModChanges(data.mod_changes)) then
-		Util.debugLog("Other mod activity, running regenerate")
-		Actions.regeneratePowerPoles()
+	if not Config.SKIP_RECALCULATE_ON_MOD_CHANGES then
+		if data.migration_applied or (data.mod_changes and checkModChanges(data.mod_changes)) then
+			if Util.isTechnologyResearched() then
+				Util.debugLog("Other mod activity, running regenerate")
+				Actions.regeneratePowerPoles()
+			else
+				Util.debugLog("Technology is not researched by any force, skipping recalculate")
+			end
+		end
+	else
+		Util.debugLog("Skipped recalculate check on mod changes")
 	end
 end)
 
