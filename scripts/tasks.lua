@@ -16,7 +16,7 @@ function Tasks.init()
 end
 
 function Tasks.attemptToStartScheduler()
-	if not Tasks.SCHEDULER_RUNNING and global.runningTasks > 0 then
+	if not Tasks.SCHEDULER_RUNNING and global.runningTasks and global.runningTasks > 0 then
 		Util.debugLog("Starting scheduler")
 		script.on_event(defines.events.on_tick, Tasks.scheduler)
 		Tasks.SCHEDULER_RUNNING = true
