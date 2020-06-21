@@ -28,17 +28,11 @@ function Report.cleanup()
 	global.reportEntities = nil
 	global.reportInProgress = nil
 	
-	-- These can be nil if a cleanup is called after a save/load
-	-- But, in that case these will already be correct
-	if global.reportTechCheckBackup then
-		Actions.techCheck = global.reportTechCheckBackup
-		global.reportTechCheckBackup = nil
-	end
-
-	if global.reportPowerPadFilter then
-		Actions.Filters.containsPowerPad = global.reportPowerPadFilter
-		global.reportPowerPadFilter = nil
-	end
+	Actions.Automatic.techCheck = global.reportTechCheckBackup
+	global.reportTechCheckBackup = nil
+	
+	Actions.Filters.containsPowerPad = global.reportPowerPadFilter
+	global.reportPowerPadFilter = nil
 	
 	game.delete_surface(Report.SURFACE_NAME)
 	game.merge_forces(Report.FORCE_NAME, "neutral")
@@ -53,8 +47,8 @@ function Report.buildReport()
 		local surface = Report.buildSurface(largestSize, entityCount)
 		
 		local force = game.create_force(Report.FORCE_NAME)
-		global.reportTechCheckBackup = Actions.techCheck
-		Actions.techCheck = Report.fakeTechCheck
+		global.reportTechCheckBackup = Actions.Automatic.techCheck
+		Actions.Automatic.techCheck = Report.fakeTechCheck
 		
 		global.reportPowerPadFilter = Actions.Filters.containsPowerPad
 		Actions.Filters.containsPowerPad = Report.fakePowerPadFilter
@@ -147,9 +141,9 @@ function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entit
 				global.reportEntities[entityName] = {prototype=entityPrototype, built=true, destroyed=false, checks={powered=false, poweredSize=nil, destroyedPoles=false, irregularity=false}}
 				
 				local args = {entity, entityName, surface, entity.selection_box}
-				Tasks.scheduleEphemeralTask(Tasks.uniqueNameForEntity(entity) .. "-report-build-check", Report.Tasks.buildCheck, args, Actions.BASE_DELAY + Report.BUILD_CHECK_DELAY)
-				Tasks.scheduleEphemeralTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy", Report.Tasks.destroy, args, Actions.BASE_DELAY + Report.DESTROY_DELAY)
-				Tasks.scheduleEphemeralTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy-check", Report.Tasks.destroyCheck, args, Actions.BASE_DELAY + Report.DESTROY_CHECK_DELAY)
+				Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-build-check", Report.Tasks.buildCheck, args, Actions.BASE_DELAY + Report.BUILD_CHECK_DELAY)
+				Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy", Report.Tasks.destroy, args, Actions.BASE_DELAY + Report.DESTROY_DELAY)
+				Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy-check", Report.Tasks.destroyCheck, args, Actions.BASE_DELAY + Report.DESTROY_CHECK_DELAY)
 				count = count + 1
 			else
 				Util.traceLog("Failed to place " .. entityName .. " trying it in a later iteration")
@@ -163,7 +157,7 @@ function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entit
 	
 	if #leftovers > 0 and count > 0 then
 		Util.traceLog("Scheduling next iteration for " .. #leftovers .. " leftover entities")
-		Tasks.scheduleEphemeralTask(game.tick .. "-report-schedule-tasks", Report.buildEntitiesAndScheduleTasks, {largestSize, surface, force, leftovers}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
+		Tasks.scheduleTask(game.tick .. "-report-schedule-tasks", Report.buildEntitiesAndScheduleTasks, {largestSize, surface, force, leftovers}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
 	else
 		Util.traceLog("Either placed all entities or failed to place some altogether")
 		for _, leftover in ipairs(leftovers) do
@@ -172,8 +166,7 @@ function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entit
 			global.reportEntities[entityName] = {prototype=leftover, built=false, destroyed=false}
 		end
 		
-		Tasks.scheduleEphemeralTask(game.tick .. "-report-generation", Report.generateReport, {}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
-		Tasks.scheduleTask(game.tick .. "-report-cleanup", "reportCleanup", {}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY + 1)
+		Tasks.scheduleTask(game.tick .. "-report-generation", Report.generateReport, {}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
 	end
 end
 
@@ -198,6 +191,7 @@ function Report.generateReport()
 	end
 	
 	Util.printAll({"Powered-Entities-report-generation-end", Report.FILE_NAME})
+	Report.cleanup()
 end
 
 function Report.sortReportData(reportEntities)
