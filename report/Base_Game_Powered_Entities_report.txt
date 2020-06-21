@@ -54,14 +54,10 @@ Unpowered Entities
   burner-generator - 3x5
   burner-inserter - 0.796875x0.796875
   burner-mining-drill - 2x2
-  compi-logistics-chest - 1x1
-  compi-roboport - 1x1
-  compilatron-chest - 1x1
   constant-combinator - 1x1
   crash-site-chest-1 - 1x1
   crash-site-chest-2 - 1x1
   curved-rail - 3.3984375x1.59375
-  cutscene-gun-turret - 2x2
   express-loader - 1x2
   express-splitter - 1.796875x1
   express-transport-belt - 1x1
@@ -95,7 +91,7 @@ Unpowered Entities
   market - 3x3
   medium-worm-turret - 2.1953125x2
   nuclear-reactor - 5x5
-  offshore-pump - 2x1.9765625
+  offshore-pump - 1.1953125x1.9765625
   pipe - 1x1
   pipe-to-ground - 1x1
   player-port - 2x2
