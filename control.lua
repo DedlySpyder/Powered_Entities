@@ -110,7 +110,7 @@ script.on_init(function(data)
 end)
 
 script.on_load(function(data)
-	Tasks.attemptToStartScheduler()
+	Tasks.onLoad()
 	register_remote_events(data)
 end)
 
@@ -118,7 +118,7 @@ end)
 function on_entity_built(event)
 	local entity = event.created_entity or event.entity or event.destination
 	if entity and entity.valid and not Entity_Lib.isBlacklistedType(entity) then
-		Actions.onBuild(entity)
+		Actions.scheduleOnBuild(entity)
 	end
 end
 
@@ -129,7 +129,7 @@ script.on_event(defines.events.script_raised_built, on_entity_built)
 script.on_event(defines.events.script_raised_revive, on_entity_built)
 
 function on_entity_destroyed(event)
-	Actions.onDestroy(event.entity)
+	Actions.scheduleOnDestroy(event.entity)
 end
 
 script.on_event(defines.events.on_pre_player_mined_item, on_entity_destroyed)

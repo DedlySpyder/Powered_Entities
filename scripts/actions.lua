@@ -34,7 +34,7 @@ function Actions.regeneratePowerPoles(forForce)
 		local iteration, batch = 0, 0
 		for _, surface in pairs(game.surfaces) do
 			for chunk in surface.get_chunks() do
-				Tasks.scheduleTask(Tasks.uniqueNameForChunk(surface, chunk), Actions.regeneratePowerPolesTask, {surface, chunk, forForce}, iteration)
+				Tasks.scheduleTask(Tasks.uniqueNameForChunk(surface, chunk), "regeneratePowerPoles", {surface, chunk, forForce}, iteration)
 				batch = batch + 1
 				if batch == maxBatchSize then
 					iteration = iteration + 1
@@ -43,11 +43,7 @@ function Actions.regeneratePowerPoles(forForce)
 			end
 		end
 		
-		local completeFunc = function(unused)
-			Util.printAll({"Powered-Entities-recalculate-completed"})
-			global.isRegenerating = false
-		end
-		Tasks.scheduleTask("regeneration-complete", completeFunc, {}, iteration + 5)
+		Tasks.scheduleTask("regeneration-complete", "regenerationComplete", {}, iteration + 5)
 		
 		Util.debugLog("Scheduled " .. (iteration * maxBatchSize) + batch .. " tasks for chunk-based powered entity regeneration")
 		Util.printAll({"Powered-Entities-recalculate-warning", iteration, math.floor(iteration/60), math.ceil(iteration/30)})
@@ -55,6 +51,11 @@ function Actions.regeneratePowerPoles(forForce)
 	else
 		Util.printAll({"Powered-Entities-recalculate-already-running"})
 	end
+end
+
+function Actions.regenerationComplete(unused)
+	Util.printAll({"Powered-Entities-recalculate-completed"})
+	global.isRegenerating = false
 end
 
 function Actions.regeneratePowerPolesTask(surface, chunk, forForce)
@@ -69,7 +70,7 @@ function Actions.regeneratePowerPolesTask(surface, chunk, forForce)
 	end
 	
 	for _, entity in pairs(entities) do
-		Actions.onBuild(entity)
+		Actions.scheduleOnBuild(entity)
 	end
 end
 
@@ -90,10 +91,37 @@ end
 
 
 
--- Automatic functions
-Actions.Automatic = {}
-function Actions.Automatic.onBuild(entityName, surface, force, area)
-	if Actions.Automatic.techCheck(force) then
+-- Scheduling functions
+function Actions.scheduleOnBuild(entity)
+	if Actions.canSchedule("onBuild", entity) then
+		Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity), "onBuild", {entity, entity.name, entity.surface, entity.force, entity.selection_box}, Actions.BASE_DELAY)
+	end
+end
+
+function Actions.scheduleOnDestroy(entity)
+	if Actions.canSchedule("onDestroy", entity) then
+		Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity), "onDestroy", {entity, entity.name, entity.surface, entity.force, entity.selection_box}, Actions.BASE_DELAY)
+	end
+end
+
+function Actions.canSchedule(funcName, entity)
+	if entity and entity.valid and entity.name then
+		Util.traceLog(funcName .. " called with entity " .. entity.name)
+		return true
+	else
+		Util.traceLog(funcName .. " called with invalid entity or variable")
+	end
+end
+
+
+
+-- Main actions
+function Actions.onBuild(entity, entityName, surface, force, area)
+	if not (entity and entity.valid) then
+		Util.traceLog("WARN: On build triggering entity is no longer valid")
+	end
+	
+	if Actions.techCheck(force) then
 		local entityToPower = Actions.checkAreaForEntityToPower(surface, force, area)
 		if entityToPower and entityToPower.valid then
 			Util.traceLog("Found entity to power: " .. entityToPower["name"])
@@ -112,21 +140,25 @@ function Actions.Automatic.onBuild(entityName, surface, force, area)
 	end
 end
 
-function Actions.Automatic.onDestroy(entityName, surface, force, area)
-	if Actions.Automatic.techCheck(force) then
+function Actions.onDestroy(entity, entityName, surface, force, area)
+	if not (entity and entity.valid) then
+		Util.traceLog("WARN: On destroy triggering entity is no longer valid")
+	end
+	
+	if Actions.techCheck(force) then
 		Util.traceLog("Destroying all poles in area and checking for new powered entity(ies)")
 		Actions.destroyInvisiblePowerPolesInArea(surface, force, area)
 		
 		local entities = surface.find_entities_filtered{area=area, force=force}
 		for _, entity in pairs(entities) do
-			Actions.Automatic.onBuild(entity["name"], surface, force, entity["selection_box"])
+			Actions.onBuild(entity, entity["name"], surface, force, entity["selection_box"])
 		end
 	else
 		Util.traceLog("Powered entities research not currently researched for force " .. force.name)
 	end
 end
 
-function Actions.Automatic.techCheck(force)
+function Actions.techCheck(force)
 	return force.technologies[Config.TECHNOLOGY_NAME].researched
 end
 
@@ -227,35 +259,11 @@ function Actions.Filters.containsPowerPad(entities)
 	return false
 end
 
-
-
--- Register actions based on manual/automatic mode
-local actionWrapper = function(funcName, actionFunc)
-	local basicTask = function(taskFunc, entity, entityName, surface, force, area)
-		if not (entity and entity.valid) then
-			Util.traceLog("WARN: Triggering entity is no longer valid")
-		end
-		taskFunc(entityName, surface, force, area)
-	end
-	
-	local action = function(entity)
-		if entity and entity.valid and entity.name then
-			Util.traceLog(funcName .. " called with entity " .. entity.name)
-			Tasks.scheduleTask(Tasks.uniqueNameForEntity(entity), basicTask, {actionFunc, entity, entity.name, entity.surface, entity.force, entity.selection_box}, Actions.BASE_DELAY)
-		else
-			Util.traceLog(funcName .. " called with invalid entity or variable")
-		end
-	end
-	return action
-end
-
 if Config.MANUAL_MODE then
 	-- The manual functions call the automatic functions, so the automatic tech check is redundant, since the power pads are relied on instead
-	Actions.Automatic.techCheck = function(f) return true end
+	Actions.techCheck = function(f) return true end
 else
 	-- In automatic mode we don't need the power pads
 	Actions.Filters.containsPowerPad = function(e) return true end
 end
 
-Actions.onBuild = actionWrapper("onBuild", Actions.Automatic.onBuild)
-Actions.onDestroy = actionWrapper("onDestroy", Actions.Automatic.onDestroy)
