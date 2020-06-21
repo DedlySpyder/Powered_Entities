@@ -1,45 +1,14 @@
 require("scripts/actions")
 require("scripts/config")
 require("scripts/gui")
+require("scripts/migrations")
 require("scripts/report")
 require("scripts/tasks")
 require("scripts/util")
 
 
 script.on_configuration_changed(function(data)
-	if data.mod_changes and data.mod_changes["Powered_Entities"] and data.mod_changes["Powered_Entities"].old_version then
-		if data.mod_changes["Powered_Entities"].old_version < "0.3.0" then
-			if Config.MANUAL_MODE then
-				-- This is needed because json migration does not work for technologies in 0.12
-				for _, force in pairs(game.forces) do
-					if force.recipes["power-pad"].enabled then
-						force.technologies["powered-entities"].researched = true
-					end
-				end
-			end
-		end
-		
-		if data.mod_changes["Powered_Entities"].old_version < "0.4.0" then
-			-- This first one isn't used any more
-			global.poweredEntities = nil
-			
-			-- Tasks was reworked, so any old tasks will break (it was only being used on a regenerate before anyways)
-			global.scheduledTasks = nil
-			global.runningTasks = nil
-			global.wasInManualMode = not Config.MANUAL_MODE -- Force a recipe check
-			
-			for _, player in pairs(game.players) do
-				if player.gui.top.poweredEntitiesRecalculateButton and player.gui.top.poweredEntitiesRecalculateButton.valid then
-					player.gui.top.poweredEntitiesRecalculateButton.destroy()
-				end
-			end
-			GUI.drawRecalculateButtonAllWhenNeeded()
-			
-			Tasks.init()
-			Actions.init()
-			Actions.regeneratePowerPoles()
-		end
-	end
+	Migrations.handle(data)
 	
 	if data.mod_startup_settings_changed then
 		-- Manual/Automatic swap
