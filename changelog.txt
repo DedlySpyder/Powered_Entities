@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.0
+Date: 21. 06. 2020
+  Bugfixes:
+    - Fixed crash when loading a game that was midway through any internal action (required some heavy refactoring to a core part of the mod)
+---------------------------------------------------------------------------------------------------
 Version: 0.4.17
 Date: 12. 06. 2020
   Other:
