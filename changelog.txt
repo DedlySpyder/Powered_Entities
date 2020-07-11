@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.1
+Date: 10. 07. 2020
+  Locale:
+    - Added Russian locale (thanks to TheLastEagle for translation work)
+    - Reworked report to use localized item names and migrated all static lines to the locale files
+---------------------------------------------------------------------------------------------------
 Version: 0.5.0
 Date: 21. 06. 2020
   Bugfixes:
