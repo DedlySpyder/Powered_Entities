@@ -1,0 +1,119 @@
+Powered Entities for power pole size 1
+  Power Antenna - 1x1
+  Programmable speaker - 1x1
+  Lamp - 1x1
+
+Powered Entities for power pole size 2
+  Accumulator - 2x2
+  Arithmetic combinator - 1x2
+  Decider combinator - 1x2
+  Electric energy interface - 2x2
+  Laser turret - 2x2
+  Pump - 1x2
+
+Powered Entities for power pole size 3
+  Assembling machine 1 - 3x3
+  Assembling machine 2 - 3x3
+  Assembling machine 3 - 3x3
+  Beacon - 3x3
+  Centrifuge - 3x3
+  Chemical plant - 3x3
+  Repaired assembling machine - 3x2
+  Repaired assembling machine - 2x3
+  Electricity generator - 2.3984375x1.796875
+  Electric furnace - 3x3
+  Electric mining drill - 3x3
+  Lab - 3x3
+  Pumpjack - 3x3
+  Radar - 3x3
+  Solar panel - 3x3
+
+Powered Entities for power pole size 4
+  Roboport - 4x4
+
+Powered Entities for power pole size 5
+  Repaired lab - 5x3
+  Oil refinery - 5x5
+
+Powered Entities for power pole size 9
+  Rocket silo - 9x9
+
+Unpowered Entities
+  Artillery turret - 3x3
+  Bait chest - 1x1
+  Behemoth worm - 2.796875x2.3984375
+  Large shipwreck - 5.3984375x3
+  Large shipwreck - 4x3
+  Large shipwreck - 4x3
+  Big worm - 2.796875x2.3984375
+  Biter spawner - 6x5
+  Blue chest - 1x1
+  Boiler - 3x2
+  Burner generator - 3x5
+  Burner inserter - 0.796875x0.796875
+  Burner mining drill - 2x2
+  Constant combinator - 1x1
+  Chest capsule - 1x1
+  Chest capsule - 1x1
+  Curved rail - 3.3984375x1.59375
+  Express loader - 1x2
+  Express splitter - 1.796875x1
+  Express transport belt - 1x1
+  Express underground belt - 1x1
+  Fast inserter - 0.796875x0.796875
+  Fast loader - 1x2
+  Fast splitter - 1.796875x1
+  Fast transport belt - 1x1
+  Fast underground belt - 1x1
+  Filter inserter - 0.796875x0.796875
+  Flamethrower turret - 2x3
+  Gate - 1x1
+  Gun turret - 2x2
+  Heat exchanger - 3x2
+  Heat interface - 1x1
+  Heat pipe - 1x1
+  Solar panel - 0x0
+  Infinity chest - 1x1
+  Infinity pipe - 1x1
+  Inserter - 0.796875x0.796875
+  Iron chest - 1x1
+  Land mine - 1x1
+  Loader - 1x2
+  Loader 1x1 - 1x1
+  Active provider chest - 1x1
+  Buffer chest - 1x1
+  Passive provider chest - 1x1
+  Requester chest - 1x1
+  Storage chest - 1x1
+  Long handed inserter - 0.796875x0.796875
+  Market - 3x3
+  Medium worm - 2.1953125x2
+  Nuclear reactor - 5x5
+  Offshore pump - 1.1953125x1.9765625
+  Pipe - 1x1
+  Pipe to ground - 1x1
+  Player port - 2x2
+  Power switch - 2x2
+  Rail chain signal - 1x1
+  Rail signal - 1x1
+  Red chest - 1x1
+  Simple entity with force - 1x1
+  Simple entity with owner - 1x1
+  Small worm - 1.796875x1.59375
+  Spitter spawner - 6x5
+  Splitter - 1.796875x1
+  Stack filter inserter - 0.796875x0.796875
+  Stack inserter - 0.796875x0.796875
+  Steam engine - 3x5
+  Steam turbine - 3x5
+  Steel chest - 1x1
+  Steel furnace - 1.59375x2
+  Stone furnace - 1.59375x2
+  Wall - 1x1
+  Storage tank - 3x3
+  Straight rail - 1.3984375x1.59375
+  Train stop - 1.796875x1.796875
+  Transport belt - 1x1
+  Underground belt - 1x1
+  Wooden chest - 1x1
+

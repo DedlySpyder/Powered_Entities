@@ -180,7 +180,7 @@ end
 function Report.generateReport()
 	local reportEntities = global.reportEntities
 	Util.traceLog("Building report for " .. table_size(reportEntities) .. " entities")
-	game.write_file(Report.FILE_NAME, "Powered Entities Report\n")
+	game.write_file(Report.FILE_NAME, "")
 	
 	local sortFunc = function(a, b) return a["prototype"]["name"] < b["prototype"]["name"] end
 	local reportData = Report.sortReportData(reportEntities)
@@ -189,11 +189,11 @@ function Report.generateReport()
 		local entities = entitiesData["data"]
 		
 		if tonumber(size) then
-			Report.writeSection("Powered Entities for power pole size " .. size, entities)
+			Report.writeSection({"Powered-Entities-report-data-header-size-section", size}, entities)
 		elseif size == "unpowered" then
-			Report.writeSection("Unpowered Entities", entities)
+			Report.writeSection({"Powered-Entities-report-data-header-unpowered-section"}, entities)
 		elseif size == "unbuilt" then
-			Report.writeSection("Unbuilt Entities", entities)
+			Report.writeSection({"Powered-Entities-report-data-header-unbuilt-section"}, entities)
 		end
 	end
 	
@@ -248,22 +248,22 @@ function Report.sortReportData(reportEntities)
 end
 
 function Report.writeSection(header, entities)
-	Util.traceLog("Writing section <" .. header .. "> of report for " .. tostring(#entities) .. " entities")
+	Util.traceLog("Writing section <" .. serpent.line(header) .. "> of report for " .. tostring(#entities) .. " entities")
 	local sortFunc = function(a, b) return a["prototype"]["name"] < b["prototype"]["name"] end
-	Report.appendReport("\n" .. header)
+	Report.appendReport(header)
 	
 	table.sort(entities, sortFunc)
 	for _, entity in ipairs(entities) do
 		Report.appendReport(Report.getLineFormatted(entity))
 	end
+	Report.appendReport("")
 end
 
 function Report.getLineFormatted(entityData)
-	local ternary = function(c, t, f) if c then return t else return f end end
-	local built = ternary(entityData["built"], "", " <not built>")
-	local destroyed = ternary(entityData["built"] and not entityData["destroyed"], " <not destroyed>", "")
-	local checkDestoryedPoles = ternary(entityData["built"] and entityData["checks"] and not entityData["checks"]["destroyedPoles"], " <poles not destroyed>", "")
-	local checkIrregularity = ternary(entityData["checks"] and entityData["checks"]["irregularity"], " <irregularity>", "")
+	local built = Report.getLineErrorFlag(entityData["built"], "", {"Powered-Entities-report-data-entity-line-error-flag-not-built"})
+	local destroyed = Report.getLineErrorFlag(entityData["built"] and not entityData["destroyed"], {"Powered-Entities-report-data-entity-line-error-flag-not-destroyed"}, "")
+	local checkDestoryedPoles = Report.getLineErrorFlag(entityData["built"] and entityData["checks"] and not entityData["checks"]["destroyedPoles"], {"Powered-Entities-report-data-entity-line-error-flag-poles-not-destroyed"}, "")
+	local checkIrregularity = Report.getLineErrorFlag(entityData["checks"] and entityData["checks"]["irregularity"], {"Powered-Entities-report-data-entity-line-error-flag-irregularity"}, "")
 	
 	local prototype = entityData["prototype"]
 	local selectionBox = prototype["selection_box"]
@@ -271,11 +271,26 @@ function Report.getLineFormatted(entityData)
 	local y = math.abs(selectionBox["left_top"].y) + math.abs(selectionBox["right_bottom"].y)
 	local size = x .. "x" .. y
 	
-	return "  " .. prototype["name"] .. " - " .. size .. built .. destroyed .. checkDestoryedPoles .. checkIrregularity
+	return {"Powered-Entities-report-data-entity-line", prototype["localised_name"], size, built, destroyed, checkDestoryedPoles, checkIrregularity}
+end
+
+function Report.getLineErrorFlag(test, trueValue, falseValue)
+	local final
+	if test then
+		final = trueValue
+	else
+		final = falseValue
+	end
+	
+	if final ~= "" then
+		return {"Powered-Entities-report-data-entity-line-error-flag", final}
+	end
+	return ""
 end
 
 function Report.appendReport(message)
-	game.write_file(Report.FILE_NAME, message .. "\n", true)
+	game.write_file(Report.FILE_NAME, message, true)
+	game.write_file(Report.FILE_NAME, "\n", true)
 end
 
 Report.Tasks = {}
