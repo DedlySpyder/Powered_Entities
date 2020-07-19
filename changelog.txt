@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.3
+Date: 19. 07. 2020
+  Features:
+    - Added Entity Exclusion List setting, which accepts a comma-separated list of entity names to force to not be powered entities
+    - Added Report Localized Names setting, to print the localized/raw entity name in the output report
+---------------------------------------------------------------------------------------------------
 Version: 0.5.2
 Date: 11. 07. 2020
   Locale:
