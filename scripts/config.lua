@@ -1,5 +1,19 @@
 Config = {}
 
+-- Excludes blank entries
+local parseCsv = function(csv)
+	local t = {}
+	if csv == nil then return t end
+	
+	for str in string.gmatch(csv, "([^,]+)") do
+		if Config.TRACE_MODE then
+			log("Parsed entity for exclusion list: " .. str)
+		end
+		table.insert(t, str)
+	end
+	return t
+end
+
 Config.MANUAL_MODE = settings.startup["Powered_Entities_00_manual_mode"].value
 Config.MINIMUM_WIRE_REACH = settings.startup["Powered_Entities_01_minimum_wire_reach"].value
 
@@ -17,6 +31,8 @@ if settings.global then
 		Config.ENABLE_ACCUMULATOR = settings.global["Powered_Entities_10_enable_accumulator"].value
 		Config.ENABLE_PRODUCER = settings.global["Powered_Entities_15_enable_producers"].value
 		Config.SHOW_RECALCULATE = settings.global[Config.SHOW_RECALCULATE_NAME].value
+		Config.ENTITY_NAME_EXCLUSION_LIST = parseCsv(settings.global["Powered_Entities_entity_name_exclusion_list"].value)
+		
 		Config.RECALCULATE_BATCH_SIZE = settings.global["Powered_Entities_90_recalculate_batch_size"].value
 		Config.SKIP_RECALCULATE_ON_MOD_CHANGES = settings.global["Powered_Entities_skip_recalculate_on_mod_changes"].value
 	end

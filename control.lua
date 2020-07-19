@@ -166,7 +166,7 @@ function on_setting_changed(event)
 			else
 				GUI.destroyRecalculateButtonAll()
 			end
-		elseif string.find(setting, "_enable_") then
+		elseif string.find(setting, "_enable_") or setting == "Powered_Entities_entity_name_exclusion_list" then
 			Util.debugLog("Enabled/Disabled entities changed")
 			Entity_Lib.init()
 			Actions.regeneratePowerPoles()

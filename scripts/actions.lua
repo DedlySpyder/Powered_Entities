@@ -242,7 +242,7 @@ end
 function Actions.Filters.containsElectricEntity(entities)
 	for _, entity in pairs(entities) do
 		if not string.find(entity.name, Config.INVISIBLE_POLE_BASE_NAME_ESCAPED) then
-			if Entity_Lib.isElectricEntity(entity.prototype) then
+			if not Actions.Filters.isExcludedEntity(entity) and Entity_Lib.isElectricEntity(entity.prototype) then
 				return true
 			end
 		end
@@ -253,6 +253,16 @@ end
 function Actions.Filters.containsPowerPad(entities)
 	for _, entity in pairs(entities) do
 		if entity.name == Config.POWER_PAD_NAME then
+			return true
+		end
+	end
+	return false
+end
+
+function Actions.Filters.isExcludedEntity(entity)
+	local name = entity.name
+	for _, excluded in pairs(Config.ENTITY_NAME_EXCLUSION_LIST) do
+		if excluded == name then
 			return true
 		end
 	end

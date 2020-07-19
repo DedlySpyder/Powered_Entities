@@ -67,6 +67,14 @@ data:extend({
 		order = "040"
 	},
 	{
+		name = "Powered_Entities_entity_name_exclusion_list",
+		type = "string-setting",
+		setting_type = "runtime-global",
+		default_value = "",
+		allow_blank = true,
+		order = "700"
+	},
+	{
 		name = "Powered_Entities_80_recalculate_show",
 		type = "bool-setting",
 		setting_type = "runtime-global",
