@@ -33,6 +33,7 @@ if settings.global then
 		Config.SHOW_RECALCULATE = settings.global[Config.SHOW_RECALCULATE_NAME].value
 		Config.ENTITY_NAME_EXCLUSION_LIST = parseCsv(settings.global["Powered_Entities_entity_name_exclusion_list"].value)
 		
+		Config.REPORT_LOCALIZED_NAMES = settings.global["Powered_Entities_report_localized_items"].value
 		Config.RECALCULATE_BATCH_SIZE = settings.global["Powered_Entities_90_recalculate_batch_size"].value
 		Config.SKIP_RECALCULATE_ON_MOD_CHANGES = settings.global["Powered_Entities_skip_recalculate_on_mod_changes"].value
 	end

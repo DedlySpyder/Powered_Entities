@@ -75,6 +75,13 @@ data:extend({
 		order = "700"
 	},
 	{
+		name = "Powered_Entities_report_localized_items",
+		type = "bool-setting",
+		setting_type = "runtime-global",
+		default_value = true,
+		order = "800"
+	},
+	{
 		name = "Powered_Entities_80_recalculate_show",
 		type = "bool-setting",
 		setting_type = "runtime-global",

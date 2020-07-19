@@ -271,7 +271,11 @@ function Report.getLineFormatted(entityData)
 	local y = math.abs(selectionBox["left_top"].y) + math.abs(selectionBox["right_bottom"].y)
 	local size = x .. "x" .. y
 	
-	return {"Powered-Entities-report-data-entity-line", prototype["localised_name"], size, built, destroyed, checkDestoryedPoles, checkIrregularity}
+	if Config.REPORT_LOCALIZED_NAMES then
+		return {"Powered-Entities-report-data-entity-line", prototype["localised_name"], size, built, destroyed, checkDestoryedPoles, checkIrregularity}
+	else
+		return {"Powered-Entities-report-data-entity-line", prototype["name"], size, built, destroyed, checkDestoryedPoles, checkIrregularity}
+	end
 end
 
 function Report.getLineErrorFlag(test, trueValue, falseValue)
