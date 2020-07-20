@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.5
+Date: 19. 07. 2020
+  Locale:
+    - Added Debug Type to locale
+    - Added report command to report setting description (this can also be found on the mod portal)
+    - Russian locale revision (thanks to TheLastEagle)
+---------------------------------------------------------------------------------------------------
 Version: 0.5.4
 Date: 19. 07. 2020
   Locale:
