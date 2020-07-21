@@ -118,15 +118,24 @@ function Report.buildSurface(largestSize, count)
 	surface.force_generate_chunk_requests()
 	
 	-- Clear junk, mainly cliffs
-	for _, entity in pairs(surface.find_entities()) do
-		entity.destroy()
-	end
+	Report.clearSurface(surface)
 	
 	return surface
 end
 
-function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entities)
-	Util.traceLog("Creating entities and scheduling tasks")
+function Report.clearSurface(surface)
+	for _, entity in pairs(surface.find_entities()) do
+		entity.destroy()
+	end
+end
+
+function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entities, cleanup)
+	Util.traceLog("Creating entities and scheduling tasks for " .. #entities .. " entities")
+	
+	if cleanup then
+		Util.traceLog("Clearing report surface")
+		Report.clearSurface(surface)
+	end
 	
 	local entityBoxSize = largestSize * 2
 	local halfway = math.floor(entityBoxSize / 2)
@@ -163,7 +172,7 @@ function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entit
 	
 	if #leftovers > 0 and count > 0 then
 		Util.traceLog("Scheduling next iteration for " .. #leftovers .. " leftover entities")
-		Tasks.scheduleEphemeralTask(game.tick .. "-report-schedule-tasks", Report.buildEntitiesAndScheduleTasks, {largestSize, surface, force, leftovers}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
+		Tasks.scheduleEphemeralTask(game.tick .. "-report-schedule-tasks", Report.buildEntitiesAndScheduleTasks, {largestSize, surface, force, leftovers, true}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
 	else
 		Util.traceLog("Either placed all entities or failed to place some altogether")
 		for _, leftover in ipairs(leftovers) do
