@@ -139,11 +139,12 @@ function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entit
 	
 	local entityBoxSize = largestSize * 2
 	local halfway = math.floor(entityBoxSize / 2)
-	local count = 0
+	local attempts = 0
+	local successfullyPlaced = 0
 	local leftovers = {}
 	for _, entityPrototype in pairs(entities) do
-		local row = math.floor(count / Report.ENTITIES_PER_ROW)
-		local column = count % Report.ENTITIES_PER_ROW
+		local row = math.floor(attempts / Report.ENTITIES_PER_ROW)
+		local column = attempts % Report.ENTITIES_PER_ROW
 		local entityName = entityPrototype["name"]
 		
 		if row <= Report.MAX_ROWS then
@@ -159,18 +160,19 @@ function Report.buildEntitiesAndScheduleTasks(largestSize, surface, force, entit
 				Tasks.scheduleEphemeralTask(Tasks.uniqueNameForEntity(entity) .. "-report-build-check", Report.Tasks.buildCheck, args, Actions.BASE_DELAY + Report.BUILD_CHECK_DELAY)
 				Tasks.scheduleEphemeralTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy", Report.Tasks.destroy, args, Actions.BASE_DELAY + Report.DESTROY_DELAY)
 				Tasks.scheduleEphemeralTask(Tasks.uniqueNameForEntity(entity) .. "-report-destroy-check", Report.Tasks.destroyCheck, args, Actions.BASE_DELAY + Report.DESTROY_CHECK_DELAY)
-				count = count + 1
+				successfullyPlaced = successfullyPlaced + 1
 			else
 				Util.traceLog("Failed to place " .. entityName .. " trying it in a later iteration")
 				table.insert(leftovers, entityPrototype)
 			end
+			attempts = attempts + 1
 		else
 			Util.traceLog("Max rows hit, delaying " .. entityName .. " to a later iteration")
 			table.insert(leftovers, entityPrototype)
 		end
 	end
 	
-	if #leftovers > 0 and count > 0 then
+	if #leftovers > 0 and successfullyPlaced > 0 then
 		Util.traceLog("Scheduling next iteration for " .. #leftovers .. " leftover entities")
 		Tasks.scheduleEphemeralTask(game.tick .. "-report-schedule-tasks", Report.buildEntitiesAndScheduleTasks, {largestSize, surface, force, leftovers, true}, Actions.BASE_DELAY + Report.REPORT_GENERATION_DELAY)
 	else
