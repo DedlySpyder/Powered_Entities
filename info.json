@@ -1,11 +1,11 @@
 {
   "name": "Powered_Entities",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "title": "Powered  Entities",
   "author": "DedlySpyder",
   "contact": "DedlySpyder@gmail.com",
   "homepage": "",
   "description": "This mod will create power lines between most of the game's entities that require power (after researching included technology)",
-  "dependencies": ["base >= 0.18.0"],
-  "factorio_version": "0.18"
+  "dependencies": ["base >= 1.1.0"],
+  "factorio_version": "1.1"
 }

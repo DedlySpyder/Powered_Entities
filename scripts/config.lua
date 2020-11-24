@@ -87,6 +87,7 @@ Config.BLACKLISTED_ENTITY_TYPES = {
 	"simple-entity",
 	"smoke",
 	"smoke-with-trigger",
+	"spider-leg",
 	"speech-bubble",
 	"sticker",
 	"stream",
